@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@import url("fonts.css");
+
+/* Required to ensure dark: modifiers work when manually toggling mode */
+/* REF: https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Kanit", "sans-serif";
+}
