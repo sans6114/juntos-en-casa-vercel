@@ -1,0 +1,48 @@
+---
+
+---
+
+<h1>hola</h1>
+<div>faltan: <span id="faltan">Cargando...</span></div>
+
+<script>
+  (function () {
+    const el = document.getElementById("faltan");
+    if (!el) return;
+
+    // Fecha objetivo en hora local: 26 septiembre 2025, 19:30:00
+    const target = new Date();
+    target.setFullYear(2025, 8, 26); // Mes 0-indexado: 8 = septiembre
+    target.setHours(19, 30, 0, 0);
+
+    const two = (n) => String(n).padStart(2, "0");
+
+    function tick() {
+      const now = new Date();
+      let ms = target.getTime() - now.getTime();
+
+      if (ms <= 0) {
+        el.textContent = "¡Comenzó!";
+        clearInterval(timer);
+        return;
+      }
+
+      const dayMs = 24 * 60 * 60 * 1000;
+      const hourMs = 60 * 60 * 1000;
+      const minMs = 60 * 1000;
+
+      const d = Math.floor(ms / dayMs);
+      ms %= dayMs;
+      const h = Math.floor(ms / hourMs);
+      ms %= hourMs;
+      const m = Math.floor(ms / minMs);
+      ms %= minMs;
+      const s = Math.floor(ms / 1000);
+
+      el.textContent = `${d}d ${two(h)}:${two(m)}:${two(s)}`;
+    }
+
+    tick();
+    const timer = setInterval(tick, 1000);
+  })();
+</script>

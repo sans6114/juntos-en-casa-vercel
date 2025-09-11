@@ -1,3 +1,4 @@
+import icon from 'astro-icon';
 // @ts-check
 import { defineConfig } from 'astro/config';
 
@@ -9,6 +10,15 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
+
   output: 'server',
-  adapter: netlify()
+  adapter: netlify(),
+  integrations: [icon({
+    include: {
+        // Incluir el conjunto de iconos MDI
+        mdi: ['*'], // Esto incluye todos los iconos MDI
+        // O puedes ser más específico:
+        // mdi: ['menu', 'close']
+      }
+  })]
 });

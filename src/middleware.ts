@@ -1,37 +1,36 @@
-import type { MiddlewareNext } from 'astro';
 import { defineMiddleware } from 'astro:middleware';
+
+import { firebase } from './firebase/config';
 
 const privateRoutes = ['/admin'];
 const publicRoutes = ['/', '/login', '/register'];
 
 
-export const onRequest = defineMiddleware(async ({ request, url }, next) => {
+export const onRequest = defineMiddleware(async ({ request, url, locals, redirect}, next) => {
 
-    const authHeader = request.headers.get('Authorization') ?? ''; //(el doble igual es para decile a typescript que si viene null o undefined le asigne un string vacio y no de error luego)
-    if (privateRoutes.includes(url.pathname)) {
-        return checkLocalAuth(authHeader, next);
+    const isLoggedIn = !!firebase.auth.currentUser;
+    const user = firebase.auth.currentUser;
+    
+    locals.isLoggedIn = isLoggedIn;
+    if(user) {
+        locals.user = {
+            email: user.email,
+            name: user.displayName,
+            avatar: user.photoURL ?? '',
+            emailVerified: user.emailVerified
+        };
     }
+
+
+    if(!isLoggedIn && privateRoutes.includes(url.pathname)) {
+        return redirect('/login');
+    } 
+
+    if(isLoggedIn && publicRoutes.includes(url.pathname)) {
+        return redirect('/admin');
+    }
+
     return next();
 });
 
 
-
-const checkLocalAuth = (authHeaders: string, next: MiddlewareNext) => {
-    // Lógica para verificar la autenticación local
-
-    if (authHeaders) {
-        const authValue = authHeaders.split(' ').at(-1) ?? 'user:pass';
-        const decodedValue = atob(authValue).split(':');
-        console.log(decodedValue, 'Decoded Value');
-        const [user, pass] = decodedValue;
-        if (user === 'admin' && pass === 'admin') {
-            return next();
-        }
-    }
-    return new Response('Auth necesaria', {
-            status: 401,
-            headers: {
-                'WWW-Authenticate': 'Basic realm="Secure Area"',
-            }
-    });
-}
