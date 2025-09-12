@@ -1,8 +1,17 @@
 ---
-import { firebase } from "../../firebase/config";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 
-const { isLoggedIn } = Astro.locals;
+const { isAdmin } = Astro.locals;
+interface Route {
+  name: string;
+  to: string;
+}
+
+const routes: Route[] = [
+  { name: "Oradores", to: "#oradores" },
+  { name: "Cronograma", to: "#cronograma" },
+  { name: "Inscripcion", to: "#inscripcion" },
+];
 ---
 
 <div
@@ -29,26 +38,18 @@ const { isLoggedIn } = Astro.locals;
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow flex flex-col gap-4"
       >
-        <li class="btn btn-outline btn-primary"><a href="/">Homepage</a></li>
         {
-          isLoggedIn && (
+          routes.map((route) => (
+            <li class="btn btn-outline btn-primary">
+              <a href={route.to}>{route.name}</a>
+            </li>
+          ))
+        }
+        {
+          isAdmin && (
             <li class="btn btn-outline btn-primary">
               <a href="/admin">admin</a>
             </li>
-          )
-        }
-        {
-          !isLoggedIn && (
-            <li class="btn btn-outline btn-primary">
-              <a href="/login">login</a>
-            </li>
-          )
-        }
-        {
-          isLoggedIn && (
-            <button id="logout" class="btn btn-outline btn-error" id="logout">
-              log out
-            </button>
           )
         }
       </ul>

@@ -2,11 +2,9 @@
 import "../styles/global.css";
 import NavBar from "../components/shared/NavBar.astro";
 import Header from "../components/Header.astro";
-interface Props {
-  pageTitle: string;
-  activePage: string;
-}
-const { pageTitle, activePage } = Astro.props;
+import { siteConfig } from "../siteConfig";
+
+const { title, description } = siteConfig;
 ---
 
 <html lang="en">
@@ -20,8 +18,13 @@ const { pageTitle, activePage } = Astro.props;
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://juntosencasa.org" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>{title}</title>
   </head>
   <body class="h-screen relative overflow-x-hidden max-w-7xl mx-auto">
     <NavBar />

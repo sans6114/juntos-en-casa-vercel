@@ -40,6 +40,7 @@ const rememberMe = !!emailCookie;
 
       <label class="label">Edad</label>
       <input
+        min="1"
         name="edad"
         type="number"
         class="input"
@@ -156,7 +157,6 @@ const rememberMe = !!emailCookie;
       "#iglesiaDifNombre"
     ) as HTMLInputElement;
 
-    // ✅ Animación suave para mostrar/ocultar
     formulario.addEventListener("change", (e) => {
       const target = e.target as HTMLInputElement;
 

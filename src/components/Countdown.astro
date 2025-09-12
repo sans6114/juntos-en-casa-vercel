@@ -1,0 +1,105 @@
+---
+// Componente de cuenta regresiva usando DaisyUI
+---
+
+<div class="flex gap-5">
+  <div>
+    <span class="countdown font-mono md:text-6xl text-2xl">
+      <span id="days" style="--value:0;">0</span>
+    </span>
+    days
+  </div>
+  <div>
+    <span class="countdown font-mono md:text-6xl text-2xl">
+      <span id="hours" style="--value:0;">0</span>
+    </span>
+    hours
+  </div>
+  <div>
+    <span class="countdown font-mono md:text-6xl text-2xl">
+      <span id="minutes" style="--value:0;">0</span>
+    </span>
+    min
+  </div>
+  <div>
+    <span class="countdown font-mono md:text-6xl text-2xl">
+      <span id="seconds" style="--value:0;">0</span>
+    </span>
+    sec
+  </div>
+</div>
+
+<script>
+  (function () {
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+    // Fecha objetivo: 26 septiembre 2025, 19:30:00
+    const target = new Date();
+    target.setFullYear(2025, 8, 26);
+    target.setHours(19, 30, 0, 0);
+
+    function updateCountdown() {
+      const now = new Date();
+      let ms = target.getTime() - now.getTime();
+
+      if (ms <= 0) {
+        daysEl.style.setProperty("--value", "0");
+        hoursEl.style.setProperty("--value", "0");
+        minutesEl.style.setProperty("--value", "0");
+        secondsEl.style.setProperty("--value", "0");
+        clearInterval(timer);
+        return;
+      }
+
+      const dayMs = 24 * 60 * 60 * 1000;
+      const hourMs = 60 * 60 * 1000;
+      const minMs = 60 * 1000;
+
+      const d = Math.floor(ms / dayMs);
+      ms %= dayMs;
+      const h = Math.floor(ms / hourMs);
+      ms %= hourMs;
+      const m = Math.floor(ms / minMs);
+      ms %= minMs;
+      const s = Math.floor(ms / 1000);
+
+      // Solo actualizar si el valor cambió (evita animaciones innecesarias)
+      const currentSeconds = parseInt(
+        secondsEl.style.getPropertyValue("--value") || "0"
+      );
+      if (s !== currentSeconds) {
+        secondsEl.style.setProperty("--value", s.toString());
+      }
+
+      const currentMinutes = parseInt(
+        minutesEl.style.getPropertyValue("--value") || "0"
+      );
+      if (m !== currentMinutes) {
+        minutesEl.style.setProperty("--value", m.toString());
+      }
+
+      const currentHours = parseInt(
+        hoursEl.style.getPropertyValue("--value") || "0"
+      );
+      if (h !== currentHours) {
+        hoursEl.style.setProperty("--value", h.toString());
+      }
+
+      const currentDays = parseInt(
+        daysEl.style.getPropertyValue("--value") || "0"
+      );
+      if (d !== currentDays) {
+        daysEl.style.setProperty("--value", d.toString());
+      }
+    }
+
+    updateCountdown();
+    // Cambiar a 1000ms para actualizaciones más suaves
+    const timer = setInterval(updateCountdown, 100);
+  })();
+</script>

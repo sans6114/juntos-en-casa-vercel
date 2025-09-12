@@ -14,16 +14,18 @@ export const inscripcionDB = defineAction({
         name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
         edad: z.number().min(0, 'La edad debe ser un número positivo'),
         iglesiaVS: z.boolean().optional(),
+        iglesiaNone: z.boolean().optional(),
         iglesiaDif: z.boolean().optional(),
         iglesiaDifNombre: z.string().optional(),
     }),
-    handler: async ({uid, name, edad, iglesiaVS, iglesiaDif, iglesiaDifNombre}) => {
+    handler: async ({uid, name, edad, iglesiaVS, iglesiaNone, iglesiaDif, iglesiaDifNombre}) => {
         try {
             const incripcionRef = await addDoc(collection(firebase.db, 'inscripciones'), {
                 uid,
                 name,
                 edad,
                 iglesiaVS: iglesiaVS || false,
+                iglesiaNone: iglesiaNone || false,
                 iglesiaDif: iglesiaDif || false,
                 iglesiaDifNombre: iglesiaDifNombre || null,
                 timestamp: new Date()

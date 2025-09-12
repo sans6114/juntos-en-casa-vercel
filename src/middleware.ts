@@ -3,7 +3,7 @@ import { defineMiddleware } from 'astro:middleware';
 import { firebase } from './firebase/config';
 
 const privateRoutes = ['/admin'];
-const publicRoutes = ['/', '/login', '/register'];
+const publicRoutes = ['/', '/login', '/inscripcion'];
 
 
 export const onRequest = defineMiddleware(async ({ request, url, locals, redirect }, next) => {
