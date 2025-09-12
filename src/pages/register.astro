@@ -8,14 +8,14 @@ const rememberMe = !!emailCookie;
 <AuthLayout title="Register">
   <form action="">
     <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
-      <legend class="fieldset-legend text-2xl font-bold">Register</legend>
+      <legend class="fieldset-legend text-2xl font-bold">Inscripcion</legend>
 
-      <label class="label">Name</label>
+      <label class="label">Nombre</label>
       <input
         name="name"
         type="text"
         class="input"
-        placeholder="Name"
+        placeholder="Nombre"
         required
       />
 
@@ -38,48 +38,106 @@ const rememberMe = !!emailCookie;
         required
       />
 
-      <button class="btn bg-white text-black border border-gray-500 mt-4">
-        <svg
-          aria-label="Google logo"
-          width="16"
-          height="16"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          ><g
-            ><path d="m0 0H512V512H0" fill="#fff"></path><path
-              fill="#34a853"
-              d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-            ></path><path
-              fill="#4285f4"
-              d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-            ></path><path
-              fill="#fbbc02"
-              d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path
-              fill="#ea4335"
-              d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-            ></path></g
-          ></svg
-        >
-        Login with Google
-      </button>
+      <label class="label">Edad</label>
+      <input
+        name="edad"
+        type="number"
+        class="input"
+        placeholder="Edad"
+        required
+      />
 
+      <div class="divider m-0 p-0 mt-2"></div>
+
+      <div class="flex flex-col gap-5">
+        <p class="font-bold text-xl">A que iglesia perteneces?</p>
+
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <span class="label-text">Iglesia Vida Sobrenatural</span>
+            <input
+              type="radio"
+              name="tipoIglesia"
+              value="Vida Sobrenatural"
+              class="radio"
+              checked
+            />
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <span class="label-text">Otra iglesia</span>
+            <input
+              type="radio"
+              name="tipoIglesia"
+              value="Otra iglesia"
+              class="radio"
+            />
+          </label>
+        </div>
+        <div
+          class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
+          id="iglesiaNombreContainer"
+        >
+          <input
+            id="iglesiaDifNombre"
+            name="iglesiaDifNombre"
+            type="text"
+            class="input mt-2 w-full"
+            placeholder="Nombre de tu congregación"
+          />
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <span class="label-text">No pertenezco a ninguna iglesia</span>
+            <input
+              name="tipoIglesia"
+              type="radio"
+              value="ninguna"
+              class="radio"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- checkboxes inputs 
+      <div class="flex gap-2 items-center">
+        <label class="label">Perteneces a iglesia Vida Sobrenatural:</label>
+        <input
+          id="iglesiaVS"
+          name="iglesiaVS"
+          type="checkbox"
+          class="checkbox"
+        />
+      </div>
+      <div class="flex flex-col mt-2">
+        <div class="flex gap-2 items-center">
+          <label class="label">Perteneces a otra iglesia diferente:</label>
+          <input
+            id="iglesiaDif"
+            name="iglesiaDif"
+            type="checkbox"
+            class="checkbox"
+          />
+        </div>
+
+        <div class="gap-2 items-center mt-2 hidden" id="iglesiaDifNombre">
+          <label class="label">Nombre de la iglesia:</label>
+          <input
+            name="iglesiaDifNombre"
+            type="text"
+            class="input"
+            placeholder="Tu congregacion"
+            required
+          />
+        </div>
+      </div> -->
       <button
         id="register-btn"
         type="submit"
-        class="btn btn-neutral disabled:opacity-50">register</button
-      >
-      <div class="flex gap-2 items-center mt-2">
-        <label class="label">Remember me</label>
-        <input
-          type="checkbox"
-          checked={rememberMe}
-          name="remember_me"
-          class="checkbox checkbox-sm"
-        />
-      </div>
-
-      <a href="/login" class="btn btn-link"
-        >You already have an account? Login</a
+        class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirse</button
       >
     </fieldset>
   </form>
@@ -91,22 +149,56 @@ const rememberMe = !!emailCookie;
   document.addEventListener("DOMContentLoaded", () => {
     const formulario = document.querySelector("form") as HTMLFormElement;
     const btn = document.querySelector("#register-btn") as HTMLButtonElement;
+    const iglesiaNombreContainer = document.querySelector(
+      "#iglesiaNombreContainer"
+    ) as HTMLDivElement;
+    const iglesiaNombreInput = document.querySelector(
+      "#iglesiaDifNombre"
+    ) as HTMLInputElement;
+
+    // ✅ Animación suave para mostrar/ocultar
+    formulario.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement;
+
+      if (target.name === "tipoIglesia") {
+        if (target.value === "Otra iglesia") {
+          // Mostrar con animación
+          iglesiaNombreContainer.classList.remove("max-h-0", "opacity-0");
+          iglesiaNombreContainer.classList.add("max-h-20", "opacity-100");
+          iglesiaNombreInput.required = true;
+        } else {
+          // Ocultar con animación
+          iglesiaNombreContainer.classList.remove("max-h-20", "opacity-100");
+          iglesiaNombreContainer.classList.add("max-h-0", "opacity-0");
+          iglesiaNombreInput.required = false;
+          iglesiaNombreInput.value = "";
+        }
+      }
+    });
 
     formulario.addEventListener("submit", async (e) => {
       e.preventDefault();
       btn.setAttribute("disabled", "true");
 
       const formData = new FormData(formulario);
-      const { data, error } = await actions.registerUser(formData);
-      if (data) {
-        if (data.success) {
-          window.location.replace("/admin");
-        } else {
-          alert("usuario con correo repetido");
-          return;
-        }
-      }
+      const { data: registerData } = await actions.registerUser(formData);
+      const jsonToDb = {
+        uid: registerData?.uid!,
+        name: formData.get("name") as string,
+        edad: Number(formData.get("edad")),
+        iglesiaVS: formData.get("iglesiaVS") === "on" ? true : false,
+        iglesiaExterna: formData.get("iglesiaExterna") as string,
+      };
 
+      const { data: inscripcionResult } = await actions.inscripcionDB(jsonToDb);
+      if (registerData?.success && inscripcionResult?.success) {
+        alert("Usuario registrado e inscrito con éxito");
+        window.location.replace("/");
+      } else {
+        alert("usuario con correo repetido");
+        //TODO: MANEJAR BIEN LOS ERRORES.
+        return;
+      }
       btn.removeAttribute("disabled");
     });
   });
