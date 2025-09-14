@@ -4,6 +4,8 @@ import {
   getApps,
   initializeApp,
 } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
 
 const activeApps = getApps();
 const serviceAccount = {
@@ -31,4 +33,9 @@ const initApp = () => {
   })
 }
 
+// 1. Exporta la aplicación principal
 export const app = activeApps.length === 0 ? initApp() : activeApps[0];
+
+// 2. Exporta cada servicio de forma individual
+export const authAdmin = getAuth(app);
+export const firestoreAdmin = getFirestore(app);

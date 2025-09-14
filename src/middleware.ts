@@ -1,12 +1,10 @@
 import { defineMiddleware } from 'astro:middleware';
-import {
-  doc,
-  getDoc,
-} from 'firebase/firestore';
 
 import { firebase } from './firebase/config';
+import { firestoreAdmin } from './firebase/server';
+import type { Inscripcion } from './interfaces';
 
-const privateRoutes = ['/admin'];
+const privateRoutes = ['/admin', '/mi-inscripcion'];
 const publicRoutes = ['/login', '/inscripcion'];
 
 
@@ -22,30 +20,26 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
         try {
             const tokenResult = await user.getIdTokenResult();
             const customClaims = tokenResult.claims;
-            const docRef = doc(firebase.db, "inscripciones", user.uid);
-            const docSnap = await getDoc(docRef);
-            if(docSnap.exists()) {
-                const inscripcion = docSnap.data();
+            const docRef = firestoreAdmin.doc(`inscripciones/${user.uid}`)
+            const docSnap = await docRef.get();
+            console.log({ docSnapData: docSnap.data() });
+            if(docSnap.exists) {
+                const inscripcion = docSnap.data() as Inscripcion;
                 locals.inscripcion = {
-                    nombre: inscripcion.name,
+                    name: inscripcion.name,
+                    apellido: inscripcion.apellido,
                     edad: inscripcion.edad,
                     iglesiaVS: inscripcion.iglesiaVS,
                     iglesiaNone: inscripcion.iglesiaNone,
                     iglesiaDif: inscripcion.iglesiaDif,
                     iglesiaDifNombre: inscripcion.iglesiaDifNombre,
-                    timestamp: inscripcion.timestamp.toDate()
+                    timestamp: inscripcion.timestamp
                 }
+                console.log({ inscripcion });
             }
 
             locals.isLoggedIn = true;
             locals.isAdmin = !!customClaims.admin;
-
-            locals.user = {
-                uid: user.uid,
-                email: user.email,
-                name: user.displayName,
-                avatar: user.photoURL ?? '',
-            };
         } catch (error) {
             console.error('Error getting user token:', error);
             // En caso de error, mantener como no logueado

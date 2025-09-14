@@ -11,9 +11,9 @@ import {
   type UserCredential,
 } from 'firebase/auth';
 import {
-  addDoc,
-  collection,
+  doc,
   FirestoreError,
+  setDoc,
 } from 'firebase/firestore';
 
 import { firebase } from '../../firebase/config';
@@ -51,9 +51,11 @@ export const registerSuscribeUser = defineAction({
         password
       );
       //inscripción en la base de datos
-      const incripcionRef = await addDoc(collection(firebase.db, 'inscripciones'), {
-        uid: userCredential.user.uid,
+      const incripcionRef = doc(firebase.db, 'inscripciones', userCredential.user.uid);
+
+      await setDoc(incripcionRef, {
         name,
+        apellido,
         edad,
         iglesiaVS: iglesiaVS || false,
         iglesiaNone: iglesiaNone || false,

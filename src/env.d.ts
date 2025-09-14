@@ -1,11 +1,12 @@
 interface Inscripcion {
-    nombre: string;
-    edad: number;
-    iglesiaVS: boolean;
-    iglesiaNone: boolean;
-    iglesiaDif: boolean;
-    iglesiaDifNombre?: string | null;
-    timestamp: Date;
+  name: string;
+  apellido: string;
+  edad: number;
+  iglesiaVS?: boolean;
+  iglesiaNone?: boolean;
+  iglesiaDif?: boolean;
+  iglesiaDifNombre?: string;
+  timestamp?: any;
 }
 
 interface User {
@@ -32,7 +33,7 @@ declare namespace App {
         isLoggedIn: boolean;
         user: User | null;
         isAdmin: boolean;
-        inscripcion?: Inscripcion | null;
+        inscripcion: Inscripcion | null;
     }
     interface ImportMeta {
   readonly env: ImportMetaEnv;

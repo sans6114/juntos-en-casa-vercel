@@ -1,12 +1,12 @@
 ---
 import Heading from "../components/shared/Heading.astro";
-import AuthLayout from "../layout/AuthLayout.astro";
+import InscripcionLayout from "../layout/InscripcionLayout.astro";
 
 const emailCookie = Astro.cookies.get("email");
 const rememberMe = !!emailCookie;
 ---
 
-<AuthLayout title="Inscripción - Juntos en Casa 2025">
+<InscripcionLayout title="Inscripción - Juntos en Casa 2025">
   <section
     class="overflow-hidden py-10 flex flex-col md:flex-row items-center justify-center md:px-4 md:gap-10"
   >
@@ -22,7 +22,7 @@ const rememberMe = !!emailCookie;
           required
           minlength="2"
           maxlength="50"
-          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
+          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ]+)*$"
         />
         <div class="validator-hint">Tu nombre debe contener solo letras.</div>
 
@@ -138,7 +138,7 @@ const rememberMe = !!emailCookie;
         <button
           id="register-btn"
           type="submit"
-          class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirse</button
+          class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirme</button
         >
       </fieldset>
     </form>
@@ -155,7 +155,7 @@ const rememberMe = !!emailCookie;
       />
     </div>
   </section>
-</AuthLayout>
+</InscripcionLayout>
 <script>
   import { actions } from "astro:actions";
   import { navigate } from "astro:transitions/client";

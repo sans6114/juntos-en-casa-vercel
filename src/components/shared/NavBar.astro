@@ -3,7 +3,6 @@ import { Icon } from "astro-icon/components";
 import Logo from "./Logo.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 
-const { isAdmin } = Astro.locals;
 interface Route {
   name: string;
   to: string;
@@ -14,8 +13,7 @@ const routes: Route[] = [
   { name: "Cronograma", to: "#cronograma" },
 ];
 
-const { inscripcion} = Astro.locals
-const estaInscrito = !!inscripcion;
+const { isLoggedIn,isAdmin } = Astro.locals
 ---
 
 <div
@@ -45,11 +43,14 @@ const estaInscrito = !!inscripcion;
           ))
         }
         {
-          !estaInscrito ? (
+          !isLoggedIn ? (
               <a class="btn btn-outline btn-primary" href="/inscripcion">Inscribirme</a>
           ) : (
               <a class="btn btn-outline btn-primary" href="/mi-inscripcion">Mi Inscripción</a>
-              <button class="btn btn-secondary">Salir de mi cuenta</button>
+              <button id="logout" class="btn btn-secondary w-full">
+                <Icon name="mdi:logout" class="w-6 h-6 mr-2" />
+                Cerrar sesión
+              </button>
           )
         }
         {
@@ -70,7 +71,7 @@ const estaInscrito = !!inscripcion;
     const logoutButton = document.querySelector("#logout") as HTMLButtonElement;
     logoutButton.addEventListener("click", async () => {
       await actions.logoutUser();
-      window.location.href = "/login";
+      window.location.href = "/";
     });
   });
 </script>

@@ -1,0 +1,41 @@
+---
+import type { Stats } from "../../interfaces";
+interface Props {
+  stats: Stats;
+}
+const { stats } = Astro.props;
+---
+
+<div class="flex gap-10">
+  <div class="stats stats-vertical shadow">
+    <div class="stat">
+      <div class="stat-title">Inscripciones totales</div>
+      <div class="stat-value">{stats.total}</div>
+      <div class="stat-desc">Desde apertura</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Edad promedio</div>
+      <div class="stat-value">{stats.promedioEdad.toFixed(1)}</div>
+      <div class="stat-desc">Años</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Iglesia VS</div>
+      <div class="stat-value">{stats.iglesiaVS}</div>
+      <div class="stat-desc">Pertenecen a VS</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Otra iglesia</div>
+      <div class="stat-value">{stats.iglesiaDif}</div>
+      <div class="stat-desc">Pertenecen a otra</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Sin iglesia</div>
+      <div class="stat-value">{stats.iglesiaNone}</div>
+      <div class="stat-desc">No pertenecen</div>
+    </div>
+  </div>
+</div>

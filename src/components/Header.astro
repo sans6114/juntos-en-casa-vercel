@@ -25,8 +25,7 @@ const btnInfoInscripto = {
   iconName: "mdi:account-check-outline",
   class: "mr-4 sm:btn-xl",
 };
-const { inscripcion } = Astro.locals;
-const estaInscrito = !!inscripcion;
+const { isLoggedIn } = Astro.locals;
 ---
 
 <section
@@ -44,7 +43,7 @@ const estaInscrito = !!inscripcion;
     class="relative z-10 max-w-5xl mx-auto flex flex-col items-center justify-around h-full md:justify-start px-4"
   >
     <Logo
-      class="animate-wiggle animate-infinite animate-duration-[10000ms] animate-ease-linear"
+      class="animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear"
       size="md"
     />
     <div class="absolute top-2/3 transform -translate-y-2/3">
@@ -54,7 +53,7 @@ const estaInscrito = !!inscripcion;
       <LocationButton />
       <div class="mt-4 flex items-center">
         {
-          estaInscrito ? (
+          isLoggedIn ? (
             <PrimaryButton {...btnInfoInscripto} tamanio="sm" />
           ) : (
             <PrimaryButton {...btnInfoNoInscripto} tamanio="md" />

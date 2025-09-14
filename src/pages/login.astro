@@ -1,11 +1,12 @@
 ---
-import AuthLayout from "../layout/AuthLayout.astro";
+import InscripcionLayout from "../layout/InscripcionLayout.astro";
+import Inscripcion from "./inscripcion.astro";
 
 const emailCookie = Astro.cookies.get("email")?.value || "";
 ---
 
-<AuthLayout title="Login">
-  <form action="">
+<InscripcionLayout title="Login">
+  <form class="flex flex-col items-center my-10 p-10" action="">
     <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
       <legend class="fieldset-legend text-2xl font-bold">Login</legend>
 
@@ -64,7 +65,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
       >
     </fieldset>
   </form>
-</AuthLayout>
+</InscripcionLayout>
 
 <script>
   import { actions } from "astro:actions";
