@@ -1,5 +1,10 @@
 ---
 import "../styles/global.css";
+
+const { isLoggedIn, isAdmin } = Astro.locals;
+if (isLoggedIn && !isAdmin) {
+  Astro.redirect("/mi-inscripcion");
+}
 interface Props {
   title: string;
 }

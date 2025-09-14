@@ -1,4 +1,8 @@
 import { defineMiddleware } from 'astro:middleware';
+import {
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 
 import { firebase } from './firebase/config';
 
@@ -18,16 +22,29 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
         try {
             const tokenResult = await user.getIdTokenResult();
             const customClaims = tokenResult.claims;
+            const docRef = doc(firebase.db, "inscripciones", user.uid);
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()) {
+                const inscripcion = docSnap.data();
+                locals.inscripcion = {
+                    nombre: inscripcion.name,
+                    edad: inscripcion.edad,
+                    iglesiaVS: inscripcion.iglesiaVS,
+                    iglesiaNone: inscripcion.iglesiaNone,
+                    iglesiaDif: inscripcion.iglesiaDif,
+                    iglesiaDifNombre: inscripcion.iglesiaDifNombre,
+                    timestamp: inscripcion.timestamp.toDate()
+                }
+            }
 
             locals.isLoggedIn = true;
             locals.isAdmin = !!customClaims.admin;
 
             locals.user = {
-                uid: user.uid, // Agregar UID es útil
+                uid: user.uid,
                 email: user.email,
                 name: user.displayName,
                 avatar: user.photoURL ?? '',
-                emailVerified: user.emailVerified
             };
         } catch (error) {
             console.error('Error getting user token:', error);
@@ -40,9 +57,9 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
         return redirect('/login');
     }
 
-    if (locals.isLoggedIn && publicRoutes.includes(url.pathname)) {
-        return redirect('/admin');
-    }
+    // if (locals.isLoggedIn && publicRoutes.includes(url.pathname)) {
+    //     return redirect('/admin');
+    // }
 
     return next();
 });

@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+import Logo from "./Logo.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 const { isAdmin } = Astro.locals;
@@ -10,29 +12,26 @@ interface Route {
 const routes: Route[] = [
   { name: "Oradores", to: "#oradores" },
   { name: "Cronograma", to: "#cronograma" },
-  { name: "Inscripcion", to: "#inscripcion" },
 ];
+
+const { inscripcion} = Astro.locals
+const estaInscrito = true;
 ---
 
 <div
-  class="!fixed inset-x-0 top-4 navbar shadow-sm rounded-full backdrop-blur-md md:w-2/4 mx-auto w-3/4 light:border-black border-2 dark:border-black"
+  class="!fixed inset-x-0 top-4 navbar shadow-sm rounded-full backdrop-blur-md md:w-2/4 mx-auto w-3/4 border-white border-2"
 >
-  <div class="navbar-start">
+  <a href="/" class="navbar-start">
+    <img
+      src="src/assets/logoVSblanco.png"
+      alt="Logo iglesia vida sobrenatural"
+      class="w-8 h-auto"
+    />
+  </a>
+  <div class="navbar-end">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h7"></path>
-        </svg>
+        <Icon name="mdi:menu" class="w-6 h-6" color="white" />
       </div>
       <ul
         tabindex="0"
@@ -40,10 +39,18 @@ const routes: Route[] = [
       >
         {
           routes.map((route) => (
-            <li class="btn btn-outline btn-primary">
-              <a href={route.to}>{route.name}</a>
-            </li>
+            <a class="btn btn-outline btn-primary" href={route.to}>
+              {route.name}
+            </a>
           ))
+        }
+        {
+          !estaInscrito ? (
+              <a class="btn btn-outline btn-primary" href="/inscripcion">Inscribirme</a>
+          ) : (
+              <a class="btn btn-outline btn-primary" href="/mi-inscripcion">Mi Inscripción</a>
+              <button class="btn btn-secondary">Salir de mi cuenta</button>
+          )
         }
         {
           isAdmin && (
@@ -54,12 +61,6 @@ const routes: Route[] = [
         }
       </ul>
     </div>
-  </div>
-  <div class="navbar-center">
-    <span class="btn btn-ghost text-xl">Juntos en casa</span>
-  </div>
-  <div class="navbar-end">
-    <ThemeSwitcher />
   </div>
 </div>
 <script>

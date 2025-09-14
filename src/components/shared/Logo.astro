@@ -1,0 +1,24 @@
+---
+interface Props {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const { size = "md", class: className = "" } = Astro.props;
+
+const sizeClasses = {
+  xs: "w-[50px] md:w-[100px]",
+  sm: "w-[150px] md:w-[200px]",
+  md: "w-[300px] md:w-[500px]",
+  lg: "w-[400px] md:w-[600px]",
+};
+---
+
+<!-- Logo que cambia según el tema -->
+<div class={`${className}`}>
+  <img
+    src="src/assets/logoblanco.png"
+    alt="Logo Juntos en Casa"
+    class={`${sizeClasses[size]} h-auto`}
+  />
+</div>

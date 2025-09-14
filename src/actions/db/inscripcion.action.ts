@@ -16,7 +16,7 @@ export const inscripcionDB = defineAction({
         iglesiaVS: z.boolean().optional(),
         iglesiaNone: z.boolean().optional(),
         iglesiaDif: z.boolean().optional(),
-        iglesiaDifNombre: z.string().optional(),
+        iglesiaDifNombre: z.string().min(2, 'El nombre de la iglesia debe tener al menos 2 caracteres').optional(),
     }),
     handler: async ({uid, name, edad, iglesiaVS, iglesiaNone, iglesiaDif, iglesiaDifNombre}) => {
         try {
@@ -27,7 +27,7 @@ export const inscripcionDB = defineAction({
                 iglesiaVS: iglesiaVS || false,
                 iglesiaNone: iglesiaNone || false,
                 iglesiaDif: iglesiaDif || false,
-                iglesiaDifNombre: iglesiaDifNombre || null,
+                iglesiaDifNombre: iglesiaDifNombre || null, //VIENE UNDEFINED O NULL?
                 timestamp: new Date()
             })
             return {

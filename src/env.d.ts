@@ -1,9 +1,18 @@
+interface Inscripcion {
+    nombre: string;
+    edad: number;
+    iglesiaVS: boolean;
+    iglesiaNone: boolean;
+    iglesiaDif: boolean;
+    iglesiaDifNombre?: string | null;
+    timestamp: Date;
+}
+
 interface User {
     uid: string;
     email: string | null;
     name: string | null;
     avatar: string | null;
-    emailVerified: boolean | null;
 }
 interface ImportMetaEnv {
   readonly FIREBASE_PROJECT_ID: string;
@@ -23,6 +32,7 @@ declare namespace App {
         isLoggedIn: boolean;
         user: User | null;
         isAdmin: boolean;
+        inscripcion?: Inscripcion | null;
     }
     interface ImportMeta {
   readonly env: ImportMetaEnv;

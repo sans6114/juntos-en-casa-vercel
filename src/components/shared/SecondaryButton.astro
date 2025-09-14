@@ -1,17 +1,31 @@
 ---
 import { Icon } from "astro-icon/components";
-
+enum Tamanio {
+  xs = "btn-xs",
+  sm = "btn-sm",
+  md = "btn",
+  lg = "btn-lg",
+  xl = "btn-xl",
+}
 interface Props {
+  tamanio?: keyof typeof Tamanio;
   href?: string;
   text: string;
   iconName: string;
   class?: string;
 }
-const { href, text, iconName, class: className = "" } = Astro.props;
+
+const {
+  href,
+  text,
+  iconName,
+  class: className = "",
+  tamanio = "md",
+} = Astro.props;
 ---
 
 <button
-  class={`flex items-center btn btn-outline btn-secondary w-fit ${className}`}
+  class={`flex items-center btn btn-secondary ${className} ${Tamanio[tamanio]}`}
 >
   <Icon name={iconName} class="inline-block w-6 h-6" />
   <a href={href}>

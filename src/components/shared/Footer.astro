@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon/components";
+import Logo from "./Logo.astro";
+---
+
+<footer
+  class="footer footer-horizontal footer-center text-white pb-10 bg-bottom-right bg-no-repeat bg-cover"
+  style="background-image: url('src/assets/background/fondo2.jpg');"
+>
+  <aside>
+    <Logo size="sm" />
+    <p class="font-bold">Viviendo en el poder del Espiritu santo</p>
+    <p>
+      Copyright © {new Date().getFullYear()} - todos los derechos reservados
+    </p>
+  </aside>
+  <nav>
+    <div class="grid grid-flow-col gap-4">
+      <a href="https://www.instagram.com/juntosencasa.ivs/">
+        <Icon name="mdi:instagram" size={40} />
+      </a>
+      <a>
+        <Icon name="tiktok" size={40} />
+      </a>
+      <a href="https://www.youtube.com/c/IglesiaCristianaVidaSobrenatural">
+        <Icon name="mdi:youtube" size={40} />
+      </a>
+    </div>
+  </nav>
+</footer>

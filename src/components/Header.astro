@@ -1,9 +1,9 @@
 ---
-import { Icon } from "astro-icon/components";
 import Countdown from "./Countdown.astro";
 import LocationButton from "./shared/LocationButton.astro";
 import PrimaryButton from "./shared/PrimaryButton.astro";
 import SecondaryButton from "./shared/SecondaryButton.astro";
+import Logo from "./shared/Logo.astro";
 
 // URL para agendar en Google Calendar
 const calendarUrl =
@@ -12,25 +12,62 @@ const calendarUrl =
   "&dates=20250926T223000Z/20250927T013000Z" + // 19:30-21:30 Argentina (UTC-3)
   "&details=Únete+a+nuestra+conferencia+cristiana+anual+con+oradores+inspiradores,+adoración+y+comunión." +
   "&location=Centro+de+Convenciones,+Buenos+Aires,+Argentina";
+
+const btnInfoNoInscripto = {
+  href: "/inscripcion",
+  text: "Inscribirme",
+  iconName: "mdi:text-box-plus",
+  class: "mr-4 sm:btn-xl",
+};
+const btnInfoInscripto = {
+  href: "/mi-inscripcion",
+  text: "Mi Inscripción",
+  iconName: "mdi:account-check-outline",
+  class: "mr-4 sm:btn-xl",
+};
+const { inscripcion } = Astro.locals;
+const estaInscrito = !!inscripcion;
 ---
 
-<section class="flex flex-col items-center h-screen justify-center gap-4">
-  <span> 26 de septiembre </span>
-  <Countdown />
-
-  <LocationButton />
-
-  <div class="flex">
-    <PrimaryButton
-      href="/inscripcion"
-      text="Inscribirme"
-      iconName="mdi:text-box-plus"
-      class="mr-4"
+<section
+  class="relative flex flex-col items-center justify-around h-screen w-full"
+>
+  <!-- Imagen para parallax (si se usa)-->
+  <img
+    src="src/assets/background/fondo.png"
+    alt="Fondo"
+    class="absolute top-0 left-0 w-full h-full object-cover img-parallax z-0"
+    style="pointer-events: none;"
+  />
+  <!-- Contenido encima -->
+  <div
+    class="relative z-10 max-w-5xl mx-auto flex flex-col items-center justify-around h-full md:justify-start px-4"
+  >
+    <Logo
+      class="animate-wiggle animate-infinite animate-duration-[10000ms] animate-ease-linear"
+      size="md"
     />
-    <SecondaryButton
-      href={calendarUrl}
-      text="Agendar fecha"
-      iconName="mdi:clipboard-text-clock-outline"
-    />
+    <div class="absolute top-2/3 transform -translate-y-2/3">
+      <Countdown />
+    </div>
+    <div class="flex items-center mt-10 flex-col justify-self-end">
+      <LocationButton />
+      <div class="mt-4 flex items-center">
+        {
+          estaInscrito ? (
+            <PrimaryButton {...btnInfoInscripto} tamanio="sm" />
+          ) : (
+            <PrimaryButton {...btnInfoNoInscripto} tamanio="md" />
+          )
+        }
+        <SecondaryButton
+          href={calendarUrl}
+          text="Agendar"
+          iconName="mdi:clipboard-text-clock-outline"
+          class="sm:btn-xl"
+          tamanio="md"
+        />
+      </div>
+    </div>
   </div>
 </section>
