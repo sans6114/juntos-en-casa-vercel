@@ -1,8 +1,12 @@
-import { defineAction } from 'astro:actions';
+import {
+  ActionError,
+  defineAction,
+} from 'astro:actions';
 import { z } from 'astro:schema';
 import {
   addDoc,
   collection,
+  FirestoreError,
 } from 'firebase/firestore';
 
 import { firebase } from '../../firebase/config';
@@ -16,7 +20,7 @@ export const inscripcionDB = defineAction({
         iglesiaVS: z.boolean().optional(),
         iglesiaNone: z.boolean().optional(),
         iglesiaDif: z.boolean().optional(),
-        iglesiaDifNombre: z.string().min(2, 'El nombre de la iglesia debe tener al menos 2 caracteres').optional(),
+        iglesiaDifNombre: z.string().optional(),
     }),
     handler: async ({uid, name, edad, iglesiaVS, iglesiaNone, iglesiaDif, iglesiaDifNombre}) => {
         try {
@@ -27,19 +31,47 @@ export const inscripcionDB = defineAction({
                 iglesiaVS: iglesiaVS || false,
                 iglesiaNone: iglesiaNone || false,
                 iglesiaDif: iglesiaDif || false,
-                iglesiaDifNombre: iglesiaDifNombre || null, //VIENE UNDEFINED O NULL?
+                iglesiaDifNombre: iglesiaDifNombre || null, // Usar null en lugar de undefined
                 timestamp: new Date()
+            });
+            console.log({
+                uid,
+                name,
+                edad,
+                iglesiaVS,
+                iglesiaNone,
+                iglesiaDif,
+                iglesiaDifNombre
             })
             return {
                 id: incripcionRef.id,
                 success: true,
                 message: 'Inscripción realizada con éxito'
-        }
+            };
+            
         } catch (error) {
-            console.error('Error al realizar la inscripción:', error);
-            return { success: false, message: 'Error al realizar la inscripción'}
+            const firebaseError = error as FirestoreError;
+            
+            if (firebaseError.code === 'permission-denied') {
+                throw new ActionError({
+                    code: "FORBIDDEN",
+                    message: 'No tienes permisos para realizar esta inscripción'
+                });
+            }
+            
+            if (firebaseError.code === 'unavailable') {
+                throw new ActionError({
+                    code: "SERVICE_UNAVAILABLE",
+                    message: 'El servicio no está disponible temporalmente'
+                });
+            }
+            
+            // Error genérico para cualquier otro caso
+            throw new ActionError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: 'Error al realizar la inscripción'
+            });
         }
     }
-  })
-  
-  
+});
+

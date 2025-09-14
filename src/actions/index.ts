@@ -2,15 +2,15 @@ import {
   loginGoogleUser,
   loginUser,
   logoutUser,
-  registerUser,
+  registerSuscribeUser,
 } from './auth';
-import { inscripcionDB } from './db';
 
 export const server = {
     // actions
-    registerUser,
+    // registerUser,
     logoutUser,
     loginUser,
     loginGoogleUser,
-    inscripcionDB
+    registerSuscribeUser
+    // inscripcionDB
 }

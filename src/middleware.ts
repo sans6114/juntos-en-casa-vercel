@@ -7,7 +7,7 @@ import {
 import { firebase } from './firebase/config';
 
 const privateRoutes = ['/admin'];
-const publicRoutes = ['/', '/login', '/inscripcion'];
+const publicRoutes = ['/login', '/inscripcion'];
 
 
 export const onRequest = defineMiddleware(async ({ request, url, locals, redirect }, next) => {
@@ -57,9 +57,9 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
         return redirect('/login');
     }
 
-    // if (locals.isLoggedIn && publicRoutes.includes(url.pathname)) {
-    //     return redirect('/admin');
-    // }
+    if (locals.isLoggedIn && publicRoutes.includes(url.pathname)) {
+        return redirect('/mi-inscripcion');
+    }
 
     return next();
 });

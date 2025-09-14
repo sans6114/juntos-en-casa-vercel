@@ -1,151 +1,165 @@
 ---
+import Heading from "../components/shared/Heading.astro";
 import AuthLayout from "../layout/AuthLayout.astro";
 
 const emailCookie = Astro.cookies.get("email");
 const rememberMe = !!emailCookie;
 ---
 
-<AuthLayout title="Register">
-  <form action="">
-    <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
-      <legend class="fieldset-legend text-2xl font-bold">Inscripcion</legend>
-
-      <label class="label">Nombre</label>
-      <input
-        name="name"
-        type="text"
-        class="input"
-        placeholder="Nombre"
-        required
-      />
-
-      <label class="label">Email</label>
-      <input
-        name="email"
-        type="email"
-        value={emailCookie ? emailCookie.value : ""}
-        class="input"
-        placeholder="Email"
-        required
-      />
-
-      <label class="label">Password</label>
-      <input
-        name="password"
-        type="password"
-        class="input"
-        placeholder="Password"
-        required
-      />
-
-      <label class="label">Edad</label>
-      <input
-        min="1"
-        name="edad"
-        type="number"
-        class="input"
-        placeholder="Edad"
-        required
-      />
-
-      <div class="divider m-0 p-0 mt-2"></div>
-
-      <div class="flex flex-col gap-5">
-        <p class="font-bold text-xl">A que iglesia perteneces?</p>
-
-        <div class="form-control">
-          <label class="label cursor-pointer">
-            <span class="label-text">Iglesia Vida Sobrenatural</span>
-            <input
-              type="radio"
-              name="tipoIglesia"
-              value="Vida Sobrenatural"
-              class="radio"
-              checked
-            />
-          </label>
-        </div>
-
-        <div class="form-control">
-          <label class="label cursor-pointer">
-            <span class="label-text">Otra iglesia</span>
-            <input
-              type="radio"
-              name="tipoIglesia"
-              value="Otra iglesia"
-              class="radio"
-            />
-          </label>
-        </div>
-        <div
-          class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
-          id="iglesiaNombreContainer"
-        >
-          <input
-            id="iglesiaDifNombre"
-            name="iglesiaDifNombre"
-            type="text"
-            class="input mt-2 w-full"
-            placeholder="Nombre de tu congregación"
-          />
-        </div>
-
-        <div class="form-control">
-          <label class="label cursor-pointer">
-            <span class="label-text">No pertenezco a ninguna iglesia</span>
-            <input
-              name="tipoIglesia"
-              type="radio"
-              value="ninguna"
-              class="radio"
-            />
-          </label>
-        </div>
-      </div>
-
-      <!-- checkboxes inputs 
-      <div class="flex gap-2 items-center">
-        <label class="label">Perteneces a iglesia Vida Sobrenatural:</label>
+<AuthLayout title="Inscripción - Juntos en Casa 2025">
+  <section
+    class="overflow-hidden py-10 flex flex-col md:flex-row items-center justify-center md:px-4 md:gap-10"
+  >
+    <form action="" class="order-2 md:order-1 mt-10 md:mt-0">
+      <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
+        <legend class="font-semibold text-xl">Tus datos</legend>
+        <label class="label">Nombre</label>
         <input
-          id="iglesiaVS"
-          name="iglesiaVS"
-          type="checkbox"
-          class="checkbox"
+          name="name"
+          type="text"
+          class="input validator"
+          placeholder="Nombre"
+          required
+          minlength="2"
+          maxlength="50"
+          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
         />
-      </div>
-      <div class="flex flex-col mt-2">
-        <div class="flex gap-2 items-center">
-          <label class="label">Perteneces a otra iglesia diferente:</label>
-          <input
-            id="iglesiaDif"
-            name="iglesiaDif"
-            type="checkbox"
-            class="checkbox"
-          />
+        <div class="validator-hint">Tu nombre debe contener solo letras.</div>
+
+        <label class="label">Apellido</label>
+        <input
+          name="apellido"
+          type="text"
+          class="input validator"
+          placeholder="Apellido"
+          required
+          minlength="2"
+          maxlength="50"
+          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
+        />
+        <div class="validator-hint">Tu apellido debe contener solo letras.</div>
+
+        <label class="label">Email</label>
+        <input
+          name="email"
+          type="email"
+          value={emailCookie ? emailCookie.value : ""}
+          class="input"
+          placeholder="Email"
+          required
+        />
+
+        <label class="label">Contraseña</label>
+        <input
+          name="password"
+          type="password"
+          class="input validator"
+          placeholder="Contraseña"
+          required
+          minlength="6"
+        />
+        <div class="validator-hint">
+          La contraseña debe tener al menos 6 caracteres.
         </div>
 
-        <div class="gap-2 items-center mt-2 hidden" id="iglesiaDifNombre">
-          <label class="label">Nombre de la iglesia:</label>
-          <input
-            name="iglesiaDifNombre"
-            type="text"
-            class="input"
-            placeholder="Tu congregacion"
-            required
-          />
+        <label class="label">Edad</label>
+        <input
+          min="1"
+          name="edad"
+          type="number"
+          class="input validator"
+          placeholder="Edad"
+          required
+        />
+        <div class="validator-hint">Por favor ingresa una edad válida.</div>
+
+        <div class="divider m-0 p-0 mt-2"></div>
+
+        <div class="flex flex-col gap-5">
+          <p class="font-bold text-xl">A que iglesia perteneces?</p>
+
+          <div class="form-control">
+            <label class="label cursor-pointer">
+              <span class="label-text">Iglesia Vida Sobrenatural</span>
+              <input
+                type="radio"
+                name="tipoIglesia"
+                value="VS"
+                class="radio"
+                required
+                checked
+              />
+            </label>
+          </div>
+
+          <div class="form-control">
+            <label class="label cursor-pointer">
+              <span class="label-text">Otra iglesia</span>
+              <input
+                type="radio"
+                name="tipoIglesia"
+                value="otra"
+                class="radio"
+                required
+              />
+            </label>
+          </div>
+          <div
+            class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
+            id="iglesiaNombreContainer"
+          >
+            <input
+              id="iglesiaDifNombre"
+              name="iglesiaDifNombre"
+              type="text"
+              class="input mt-2 w-full validator"
+              placeholder="Nombre de tu congregación"
+              minlength="4"
+            />
+            <div class="validator-hint">
+              El nombre debe tener al menos 4 caracteres.
+            </div>
+          </div>
+
+          <div class="form-control">
+            <label class="label cursor-pointer">
+              <span class="label-text">No pertenezco a ninguna iglesia</span>
+              <input
+                name="tipoIglesia"
+                type="radio"
+                value="ninguna"
+                class="radio"
+                required
+              />
+            </label>
+          </div>
         </div>
-      </div> -->
-      <button
-        id="register-btn"
-        type="submit"
-        class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirse</button
-      >
-    </fieldset>
-  </form>
+
+        <button
+          id="register-btn"
+          type="submit"
+          class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirse</button
+        >
+      </fieldset>
+    </form>
+    <div class="relative self-start order-1 md:order-2 flex flex-col">
+      <img
+        class="z-50 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
+        src="src/assets/personaje/fuegoapuntandoizq.png"
+        alt="personaje animado"
+        srcset=""
+      />
+      <Heading
+        class="text-center md:text-6xl"
+        text="Bienvenido a la\ninscripción!"
+      />
+    </div>
+  </section>
 </AuthLayout>
-
 <script>
   import { actions } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
+  import Swal from "sweetalert2";
 
   document.addEventListener("DOMContentLoaded", () => {
     const formulario = document.querySelector("form") as HTMLFormElement;
@@ -161,7 +175,7 @@ const rememberMe = !!emailCookie;
       const target = e.target as HTMLInputElement;
 
       if (target.name === "tipoIglesia") {
-        if (target.value === "Otra iglesia") {
+        if (target.value === "otra") {
           // Mostrar con animación
           iglesiaNombreContainer.classList.remove("max-h-0", "opacity-0");
           iglesiaNombreContainer.classList.add("max-h-20", "opacity-100");
@@ -181,25 +195,42 @@ const rememberMe = !!emailCookie;
       btn.setAttribute("disabled", "true");
 
       const formData = new FormData(formulario);
-      const { data: registerData } = await actions.registerUser(formData);
-      const jsonToDb = {
-        uid: registerData?.uid!,
+      const tipoIglesia = formData.get("tipoIglesia") as string; // neceserio para eveluar como boolean
+      const dataToSend = {
         name: formData.get("name") as string,
+        apellido: formData.get("apellido") as string,
         edad: Number(formData.get("edad")),
-        iglesiaVS: formData.get("iglesiaVS") === "on" ? true : false,
-        iglesiaExterna: formData.get("iglesiaExterna") as string,
+        email: formData.get("email") as string,
+        remember_me: formData.get("remember_me") === "on",
+        password: formData.get("password") as string,
+        iglesiaVS: tipoIglesia === "VS",
+        iglesiaNone: tipoIglesia === "ninguna",
+        iglesiaDif: tipoIglesia === "otra",
+        iglesiaDifNombre:
+          (formData.get("iglesiaDifNombre") as string) || undefined,
       };
-
-      const { data: inscripcionResult } = await actions.inscripcionDB(jsonToDb);
-      if (registerData?.success && inscripcionResult?.success) {
-        alert("Usuario registrado e inscrito con éxito");
-        window.location.replace("/");
-      } else {
-        alert("usuario con correo repetido");
-        //TODO: MANEJAR BIEN LOS ERRORES.
+      const { data: result, error } =
+        await actions.registerSuscribeUser(dataToSend);
+      console.log({ result, error });
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message,
+        });
+        btn.removeAttribute("disabled");
         return;
       }
-      btn.removeAttribute("disabled");
+      if (result.success) {
+        Swal.fire({
+          icon: "success",
+          title: "¡Inscripción exitosa!",
+          text: "Te has inscrito correctamente al evento.",
+          confirmButtonText: "Aceptar",
+        }).then(() => {
+          navigate("/mi-inscripcion");
+        });
+      }
     });
   });
 </script>
