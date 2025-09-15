@@ -16,7 +16,7 @@ export async function getInscripcionesStats(): Promise<Stats | undefined> {
     }
 
     const inscripciones = snapshot.docs.map(doc => doc.data());
-    
+    console.log({ inscripciones });
     const total = inscripciones.length;
     const totalEdad = inscripciones.reduce((sum, inscripcion) => sum + (inscripcion.edad || 0), 0);
     const promedioEdad = total > 0 ? totalEdad / total : 0;

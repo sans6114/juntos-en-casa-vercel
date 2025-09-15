@@ -1,9 +1,9 @@
 ---
-import Heading from "../components/shared/Heading.astro";
-import EstadisticasDatos from "../components/admin/EstadisticasDatos.astro";
-import InscripcionLayout from "../layout/InscripcionLayout.astro";
-import { getInscripcionesStats } from "../scripts/get-inscripciones-stats";
-import type { Stats } from "../interfaces";
+import Heading from "../../components/shared/Heading.astro";
+import EstadisticasDatos from "../../components/admin/EstadisticasDatos.astro";
+import InscripcionLayout from "../../layout/InscripcionLayout.astro";
+import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
+import type { Stats } from "../../interfaces";
 
 const { isAdmin } = Astro.locals;
 const estadisticas = (await getInscripcionesStats()) as Stats;

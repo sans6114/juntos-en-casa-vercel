@@ -1,0 +1,23 @@
+---
+import Heading from "../components/shared/Heading.astro";
+import EstadisticasDatos from "../components/admin/EstadisticasDatos.astro";
+import InscripcionLayout from "../layout/InscripcionLayout.astro";
+import { getInscripcionesStats } from "../scripts/get-inscripciones-stats";
+import type { Stats } from "../interfaces";
+---
+
+<InscripcionLayout title="Admin - Juntos en Casa 2025">
+  <section
+    class="max-w-5xl mx-auto flex flex-col items-center justify-center min-h-screen"
+  >
+    <Heading
+      text="Panel de Administración"
+      class="text-4xl text-center mb-10"
+    />
+    <div class="flex flex-col md:flex-row gap-10">
+      <div class="overflow-x-auto mt-10">
+        <slot />
+      </div>
+    </div>
+  </section>
+</InscripcionLayout>

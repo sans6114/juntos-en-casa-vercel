@@ -140,6 +140,9 @@ const rememberMe = !!emailCookie;
           type="submit"
           class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirme</button
         >
+        <a href="/login" class="link link-secondary"
+          >Ya te inscribiste antes? accede con tu cuenta!</a
+        >
       </fieldset>
     </form>
     <div class="relative self-start order-1 md:order-2 flex flex-col">
@@ -228,7 +231,7 @@ const rememberMe = !!emailCookie;
           text: "Te has inscrito correctamente al evento.",
           confirmButtonText: "Aceptar",
         }).then(() => {
-          navigate("/mi-inscripcion");
+          navigate("/");
         });
       }
     });

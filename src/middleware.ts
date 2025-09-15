@@ -4,7 +4,7 @@ import { firebase } from './firebase/config';
 import { firestoreAdmin } from './firebase/server';
 import type { Inscripcion } from './interfaces';
 
-const privateRoutes = ['/admin', '/mi-inscripcion'];
+const privateRoutes = ['/admin/1', '/mi-inscripcion'];
 const publicRoutes = ['/login', '/inscripcion'];
 
 
@@ -22,7 +22,6 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
             const customClaims = tokenResult.claims;
             const docRef = firestoreAdmin.doc(`inscripciones/${user.uid}`)
             const docSnap = await docRef.get();
-            console.log({ docSnapData: docSnap.data() });
             if(docSnap.exists) {
                 const inscripcion = docSnap.data() as Inscripcion;
                 locals.inscripcion = {
@@ -35,7 +34,7 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
                     iglesiaDifNombre: inscripcion.iglesiaDifNombre,
                     timestamp: inscripcion.timestamp
                 }
-                console.log({ inscripcion });
+                console.log(`inscripcion: ${inscripcion}`);
             }
 
             locals.isLoggedIn = true;

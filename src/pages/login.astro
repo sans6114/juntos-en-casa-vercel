@@ -60,8 +60,8 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
         id="login-button"
         class="btn btn-neutral disabled:opacity-50">Login</button
       >
-      <a href="/register" class="btn btn-link"
-        >You don't have an account? Register</a
+      <a href="/inscripcion" class="btn btn-link"
+        >No estas inscripto? inscribite!</a
       >
     </fieldset>
   </form>
@@ -89,7 +89,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
         throw new Error(data.msg);
       }
       // Redirigir al usuario a la página de administración
-      window.location.replace("/admin");
+      window.location.replace("/admin/1");
       btn.removeAttribute("disabled");
     });
 

@@ -7,10 +7,8 @@ import {
 
 export const server = {
     // actions
-    // registerUser,
     logoutUser,
     loginUser,
     loginGoogleUser,
     registerSuscribeUser
-    // inscripcionDB
 }
