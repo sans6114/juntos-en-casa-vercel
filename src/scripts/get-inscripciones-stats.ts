@@ -1,7 +1,7 @@
 import { firestoreAdmin } from '../firebase/server';
 import type { Stats } from '../interfaces';
 
-export async function getInscripcionesStats(): Promise<Stats | undefined> {
+export async function getInscripcionesStats(): Promise<Stats> {
     const snapshot = await firestoreAdmin.collection('inscripciones').get();
 
     if(snapshot.empty) {
@@ -23,13 +23,28 @@ export async function getInscripcionesStats(): Promise<Stats | undefined> {
     const iglesiaVS = inscripciones.filter(inscripcion => inscripcion.iglesiaVS).length;
     const iglesiaNone = inscripciones.filter(inscripcion => inscripcion.iglesiaNone).length;
     const iglesiaDif = inscripciones.filter(inscripcion => inscripcion.iglesiaDif).length;
+    
+    // Rangos solicitados
+    const rangos = inscripciones.reduce(
+        (acc, i) => {
+            const edad = i.edad;
+            if (typeof edad !== 'number') return acc;
 
+            if (edad >= 12 && edad <= 17) acc.rango12a17++;
+            else if (edad >= 18 && edad <= 25) acc.rango18a25++;
+            else if (edad > 25) acc.rangoMas25++;
+
+            return acc;
+        },
+        { rango12a17: 0, rango18a25: 0, rangoMas25: 0 }
+    );
     return {
         total,
         promedioEdad,
         iglesiaVS,
         iglesiaNone,
         iglesiaDif,
-        inscripciones
+        inscripciones,
+        ...rangos
     };
 }

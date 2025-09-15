@@ -1,38 +1,28 @@
 ---
-import AdminLayout from "../../layout/AdminLayout.astro";
 import type { GetStaticPaths } from "astro";
+import AdminLayout from "../../layout/AdminLayout.astro";
 import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
+import EstadisticasDatos from "../../components/admin/EstadisticasDatos.astro";
+export const prerender = true;
 export const getStaticPaths = (async ({ paginate }) => {
   const response = await getInscripcionesStats();
-  console.log("getStaticPaths response:", response);
-
-  if (!response?.inscripciones || response.inscripciones.length === 0) {
-    console.log("No inscriptions found, returning empty pagination");
-    return paginate([], { pageSize: 2 });
+  if (!response) {
+    throw new Error("No se pudieron obtener las estadísticas de inscripciones");
+    return [];
   }
-
-  console.log("Paginating inscriptions:", response.inscripciones.length);
-  return paginate(response.inscripciones, { pageSize: 2 });
+  return paginate(response.inscripciones, { pageSize: 10 ,
+  props: {
+      response
+    }
+  });
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props;
-
-// ✅ Agregar esta validación
-if (!page) {
-  throw new Error("Page is undefined - getStaticPaths may have failed");
-}
-
-console.log("Page object received:", {
-  currentPage: page.currentPage,
-  total: page.total,
-  dataLength: page.data?.length,
-});
+const { page, response } = Astro.props;
 ---
 
 <AdminLayout>
-  <!-- Validación adicional en el template -->
-  {page && page.data ? (
-    <table class="table table-md">
+    {page && page.data ? (
+    <table class="table table-xs md:table-md" slot="admin-table">
       <thead>
         <tr>
           <th>#</th>
@@ -40,7 +30,7 @@ console.log("Page object received:", {
           <th>Apellido</th>
           <th>Edad</th>
           <th>Iglesia</th>
-          <th>Fecha inscripción</th>
+          <th>Fecha</th>
         </tr>
       </thead>
       <tbody>
@@ -84,7 +74,7 @@ console.log("Page object received:", {
       <a
         href={page.url.next}
         class={`join-item btn ${
-          page.currentPage === page.total ? "disabled" : ""
+          page.currentPage === page.lastPage ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed" : ""
         }`}
       >
         siguientes »
@@ -95,4 +85,5 @@ console.log("Page object received:", {
       <p>Error: No se pudieron cargar los datos de paginación.</p>
     </div>
   )}
+  <EstadisticasDatos stats={response} slot="admin-stats" />
 </AdminLayout>

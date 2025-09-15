@@ -6,4 +6,7 @@ export interface Stats {
     iglesiaNone: number;
     iglesiaDif: number;
     inscripciones: any[];
+    rango12a17: number;
+    rango18a25: number;
+    rangoMas25: number;
 }

@@ -1,23 +1,45 @@
 ---
+import "../styles/global.css";
 import Heading from "../components/shared/Heading.astro";
-import EstadisticasDatos from "../components/admin/EstadisticasDatos.astro";
-import InscripcionLayout from "../layout/InscripcionLayout.astro";
-import { getInscripcionesStats } from "../scripts/get-inscripciones-stats";
-import type { Stats } from "../interfaces";
+import Footer from "../components/shared/Footer.astro";
+import NavBar from "../components/auth/NavBar.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
 ---
 
-<InscripcionLayout title="Admin - Juntos en Casa 2025">
-  <section
-    class="max-w-5xl mx-auto flex flex-col items-center justify-center min-h-screen"
-  >
-    <Heading
-      text="Panel de Administración"
-      class="text-4xl text-center mb-10"
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
     />
-    <div class="flex flex-col md:flex-row gap-10">
-      <div class="overflow-x-auto mt-10">
-        <slot />
+    <title>{title}</title>
+  </head>
+  <body>
+    <NavBar />
+    <main class="max-w-7xl mx-auto px-4 py-10 min-h-screen">
+      <Heading
+        text="Panel de Administración"
+        class="text-4xl text-center mb-10"
+      />
+      <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+        <div class="overflow-x-auto mt-10">
+          <slot name="admin-table" />
+          <slot name="admin-pdf" />
+        </div>
+        <div>
+          <slot name="admin-stats" />
+        </div>
       </div>
-    </div>
-  </section>
-</InscripcionLayout>
+    </main>
+    <Footer />
+  </body>
+</html>

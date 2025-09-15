@@ -1,0 +1,70 @@
+---
+interface Props {
+  rows: any[];
+  page: any[];
+}
+const { rows, page } = Astro.props;
+---
+
+<table class="table table-xs" slot="admin-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Edad</th>
+      <th>Iglesia</th>
+      <th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((inscripcion, idx) => (
+        <tr>
+          <th>{idx + 1}</th>
+          <td>{inscripcion.name}</td>
+          <td>{inscripcion.apellido}</td>
+          <td>{inscripcion.edad}</td>
+          <td>
+            {inscripcion.iglesiaVS
+              ? "Vida Sobrenatural"
+              : inscripcion.iglesiaDif
+                ? inscripcion.iglesiaDifNombre
+                : inscripcion.iglesiaNone
+                  ? "Sin iglesia"
+                  : ""}
+          </td>
+          <td>
+            {inscripcion.timestamp
+              ? new Date(inscripcion.timestamp).toLocaleDateString()
+              : ""}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<div class="join flex justify-center my-8">
+  <a
+    href={page.url.prev}
+    class={`join-item btn ${
+      page.currentPage === 1
+        ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed"
+        : ""
+    }`}
+  >
+    « anteriores
+  </a>
+  <button class="join-item btn">{page.currentPage}</button>
+  <a
+    href={page.url.next}
+    class={`join-item btn ${
+      page.currentPage === page.lastPage
+        ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed"
+        : ""
+    }`}
+  >
+    siguientes »
+  </a>
+</div>
