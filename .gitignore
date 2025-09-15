@@ -12,7 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-._secrets/
+_secrets/
 
 # environment variables
 .env

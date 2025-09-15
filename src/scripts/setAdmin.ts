@@ -33,7 +33,7 @@ const app = getApps().length === 0 ? initializeApp({
 const auth = getAuth(app);
 
 // Resto de tu código para establecer el rol de admin
-const email = 'juntosencasa.ivs@gmail.com';
+const email = 'fermele1980@gmail.com';
 
 async function setAdminClaim() {
   try {

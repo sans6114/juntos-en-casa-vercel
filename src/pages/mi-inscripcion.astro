@@ -3,8 +3,6 @@ import Heading from "../components/shared/Heading.astro";
 import InscripcionLayout from "../layout/InscripcionLayout.astro";
 
 const { user, inscripcion } = Astro.locals;
-
-console.log({ user, inscripcion });
 ---
 
 <InscripcionLayout title="Inscripción - Juntos en Casa 2025">
@@ -127,7 +125,7 @@ console.log({ user, inscripcion });
     <div class="relative self-start order-1 md:order-2 flex flex-col">
       <img
         class="z-50 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
-        src="src/assets/personaje/fuegoapuntandoizq.png"
+        src="/personaje/fuegoapuntandoizq.png"
         alt="personaje animado"
         srcset=""
       />
@@ -193,7 +191,6 @@ console.log({ user, inscripcion });
       };
       const { data: result, error } =
         await actions.registerSuscribeUser(dataToSend);
-      console.log({ result, error });
       if (error) {
         Swal.fire({
           icon: "error",

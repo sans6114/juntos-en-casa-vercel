@@ -34,7 +34,6 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
                     iglesiaDifNombre: inscripcion.iglesiaDifNombre,
                     timestamp: inscripcion.timestamp
                 }
-                console.log(`inscripcion: ${inscripcion}`);
             }
 
             locals.isLoggedIn = true;

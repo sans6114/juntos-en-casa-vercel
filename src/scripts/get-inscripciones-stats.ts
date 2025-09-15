@@ -11,12 +11,14 @@ export async function getInscripcionesStats(): Promise<Stats> {
             iglesiaVS: 0,
             iglesiaNone: 0,
             iglesiaDif: 0,
-            inscripciones: []
+            inscripciones: [],
+            rango12a17: 0,
+            rango18a25: 0,
+            rangoMas25: 0
         }
     }
 
     const inscripciones = snapshot.docs.map(doc => doc.data());
-    console.log({ inscripciones });
     const total = inscripciones.length;
     const totalEdad = inscripciones.reduce((sum, inscripcion) => sum + (inscripcion.edad || 0), 0);
     const promedioEdad = total > 0 ? totalEdad / total : 0;

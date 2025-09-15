@@ -29,44 +29,50 @@ const { isLoggedIn } = Astro.locals;
 ---
 
 <section
-  class="relative flex flex-col items-center justify-around h-screen w-full"
+  class="relative grid-header w-full h-screen bg-cover bg-center bg-no-repeat"
+  style="background-image: url('/background/fondo.png');"
 >
-  <!-- Imagen para parallax (si se usa)-->
-  <img
-    src="/background/fondo.png"
-    alt="Fondo"
-    class="absolute top-0 left-0 w-full h-full object-cover img-parallax z-0"
-    style="pointer-events: none;"
+  <Logo
+    class="animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear h-[300px] child"
+    size="md"
   />
-  <!-- Contenido encima -->
-  <div
-    class="relative z-10 max-w-5xl mx-auto flex flex-col items-center justify-around h-full md:justify-start px-4"
-  >
-    <Logo
-      class="animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear"
-      size="md"
-    />
-    <div class="absolute top-2/3 transform -translate-y-2/3">
-      <Countdown />
-    </div>
-    <div class="flex items-center mt-10 flex-col justify-self-end">
-      <LocationButton />
-      <div class="mt-4 flex items-center">
-        {
-          isLoggedIn ? (
-            <PrimaryButton {...btnInfoInscripto} tamanio="sm" />
-          ) : (
-            <PrimaryButton {...btnInfoNoInscripto} tamanio="md" />
-          )
-        }
-        <SecondaryButton
-          href={calendarUrl}
-          text="Agendar"
-          iconName="mdi:clipboard-text-clock-outline"
-          class="sm:btn-xl"
-          tamanio="md"
-        />
-      </div>
+  <Countdown />
+  <div class="flex flex-col items-center">
+    <LocationButton />
+    <div class="mt-4 flex items-center">
+      {
+        isLoggedIn ? (
+          <PrimaryButton {...btnInfoInscripto} tamanio="sm" />
+        ) : (
+          <PrimaryButton {...btnInfoNoInscripto} tamanio="md" />
+        )
+      }
+      <SecondaryButton
+        href={calendarUrl}
+        text="Agendar"
+        iconName="mdi:clipboard-text-clock-outline"
+        class="sm:btn-xl"
+        tamanio="md"
+      />
     </div>
   </div>
 </section>
+<style>
+  .grid-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr 1fr;
+    place-items: center;
+  }
+
+  /* Tablets */
+  @media (min-width: 769px) and (max-width: 1300px) {
+    .grid-header {
+      grid-template-rows: 3fr 1fr 1fr;
+    }
+    .child(1) {
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+  }
+</style>

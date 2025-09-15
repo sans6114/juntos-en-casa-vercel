@@ -214,7 +214,6 @@ const rememberMe = !!emailCookie;
       };
       const { data: result, error } =
         await actions.registerSuscribeUser(dataToSend);
-      console.log({ result, error });
       if (error) {
         Swal.fire({
           icon: "error",

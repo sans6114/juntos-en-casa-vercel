@@ -14,11 +14,10 @@ export default defineConfig({
   output: 'server',
   adapter: netlify(),
   integrations: [icon({
+    iconDir: "./src/icons",
     include: {
         // Incluir el conjunto de iconos MDI
-        mdi: ['*'], // Esto incluye todos los iconos MDI
-        // O puedes ser más específico:
-        // mdi: ['menu', 'close']
+        mdi: ['*'], // Esto incluye todos los 
       }
   })]
 });
