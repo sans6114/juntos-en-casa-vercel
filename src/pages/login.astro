@@ -8,7 +8,9 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
 <InscripcionLayout title="Login">
   <form class="flex flex-col items-center my-10 p-10" action="">
     <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
-      <legend class="fieldset-legend text-2xl font-bold">Login</legend>
+      <legend class="fieldset-legend text-2xl font-bold"
+        >Entrar a tu cuenta</legend
+      >
 
       <label class="label">Email</label>
       <input
@@ -19,12 +21,12 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
         placeholder="Email"
       />
 
-      <label class="label">Password</label>
+      <label class="label">Contraseña</label>
       <input
         name="password"
         type="password"
         class="input"
-        placeholder="Password"
+        placeholder="Contraseña"
       />
 
       <button
