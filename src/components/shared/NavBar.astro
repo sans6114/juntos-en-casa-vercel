@@ -1,7 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
 import Logo from "./Logo.astro";
-import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 interface Route {
   name: string;
@@ -13,23 +12,30 @@ const routes: Route[] = [
   { name: "Cronograma", to: "#cronograma" },
 ];
 
-const { isLoggedIn,isAdmin } = Astro.locals
+const { isLoggedIn, isAdmin } = Astro.locals;
 ---
 
 <div
+  id="navbar"
   class="!fixed inset-x-0 top-4 navbar shadow-sm rounded-full backdrop-blur-md md:w-2/4 mx-auto w-3/4 border-white border-2 px-5"
 >
-    <a href="/" class="navbar-start">
+  <a href="/" class="navbar-start">
     <img
+      id="navbar-logo"
       src="/logos/logoVSblanco.png"
       alt="Logo iglesia vida sobrenatural"
-      class="w-8 h-auto"
+      class="w-8 h-auto transition-all duration-300"
     />
   </a>
   <div class="navbar-end">
     <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-        <Icon name="mdi:menu" class="w-8 h-8" color="white" />
+        <Icon
+          id="menu-icon"
+          name="mdi:menu"
+          class="w-8 h-8 transition-all duration-300"
+          color="white"
+        />
       </div>
       <ul
         tabindex="0"
@@ -44,13 +50,19 @@ const { isLoggedIn,isAdmin } = Astro.locals
         }
         {
           !isLoggedIn ? (
-              <a class="btn btn-outline btn-primary" href="/inscripcion">Inscribirme</a>
+            <a class="btn btn-outline btn-primary" href="/inscripcion">
+              Inscribirme
+            </a>
           ) : (
-              <a class="btn btn-outline btn-primary" href="/mi-inscripcion">Mi Inscripción</a>
+            <>
+              <a class="btn btn-outline btn-primary" href="/mi-inscripcion">
+                Mi Inscripción
+              </a>
               <button id="logout" class="btn btn-secondary w-full">
                 <Icon name="mdi:logout" class="w-6 h-6 mr-2" />
                 Cerrar sesión
               </button>
+            </>
           )
         }
         {
@@ -64,14 +76,89 @@ const { isLoggedIn,isAdmin } = Astro.locals
     </div>
   </div>
 </div>
+
 <script>
   import { actions } from "astro:actions";
 
   document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.getElementById("navbar");
+    const logo = document.getElementById("navbar-logo");
+    const menuIcon = document.getElementById("menu-icon");
+
+    // Función para cambiar a tema claro (fondo claro)
+    function setLightTheme() {
+      logo.src = "/logos/logoVSnegro.png";
+      navbar.classList.remove("border-white", "backdrop-blur-md");
+      navbar.classList.add("border-gray-800", "bg-white/95");
+      // Cambiar color del ícono a negro/gris
+      if (menuIcon) {
+        menuIcon.style.color = "#374151"; // gray-700
+      }
+    }
+
+    // Función para cambiar a tema oscuro (fondo oscuro/transparente)
+    function setDarkTheme() {
+      logo.src = "/logos/logoVSblanco.png";
+      navbar.classList.remove("border-gray-800", "bg-white/95");
+      navbar.classList.add("border-white", "backdrop-blur-md");
+      // Cambiar color del ícono a blanco
+      if (menuIcon) {
+        menuIcon.style.color = "white";
+      }
+    }
+
+    // Observar el Header
+    const headerSection = document.querySelector("section");
+
+    if (headerSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Header visible - tema oscuro
+              setDarkTheme();
+            } else {
+              // Header NO visible - tema claro
+              setLightTheme();
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "0px 0px -80% 0px",
+        }
+      );
+
+      observer.observe(headerSection);
+
+      // Cleanup
+      window.addEventListener("beforeunload", () => {
+        observer.disconnect();
+      });
+    }
+
     const logoutButton = document.querySelector("#logout") as HTMLButtonElement;
-    logoutButton.addEventListener("click", async () => {
-      await actions.logoutUser();
-      window.location.href = "/";
-    });
+    if (logoutButton) {
+      logoutButton.addEventListener("click", async () => {
+        await actions.logoutUser();
+        window.location.href = "/";
+      });
+    }
   });
 </script>
+
+<style>
+  #navbar {
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  #navbar-logo {
+    transition: opacity 0.3s ease;
+  }
+
+  #menu-icon {
+    transition: color 0.3s ease;
+  }
+</style>

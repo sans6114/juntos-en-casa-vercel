@@ -1,6 +1,7 @@
 ---
 import type { Orador } from "../interfaces";
 import OradoresCard from "./OradoresCard.astro";
+import Heading from "./shared/Heading.astro";
 
 interface Props {
   oradores: Orador[];
@@ -9,9 +10,19 @@ interface Props {
 const { oradores } = Astro.props;
 ---
 
-<div
-  id="oradores"
-  class="flex flex-col md:flex-row md:justify-between min-h-screen bg-green-500 gap-10 items-center"
->
-  {oradores.map((orador) => <OradoresCard orador={orador} />)}
-</div>
+<section id="oradores" class="w-full px-4 py-8 flex flex-col gap-10">
+  <h2 class="text-4xl font-bold leading-none">Oradores</h2>
+
+  <div class="grid-oradores">
+    {oradores.map((orador) => <OradoresCard orador={orador} />)}
+  </div>
+</section>
+<style>
+  .grid-oradores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 3rem;
+    padding: 1rem;
+    border-radius: 20px;
+  }
+</style>
