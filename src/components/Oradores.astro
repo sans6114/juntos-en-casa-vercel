@@ -1,0 +1,17 @@
+---
+import type { Orador } from "../interfaces";
+import OradoresCard from "./OradoresCard.astro";
+
+interface Props {
+  oradores: Orador[];
+}
+
+const { oradores } = Astro.props;
+---
+
+<div
+  id="oradores"
+  class="flex flex-col md:flex-row md:justify-between min-h-screen bg-green-500 gap-10 items-center"
+>
+  {oradores.map((orador) => <OradoresCard orador={orador} />)}
+</div>

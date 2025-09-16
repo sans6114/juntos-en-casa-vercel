@@ -29,13 +29,14 @@ const { isLoggedIn } = Astro.locals;
 ---
 
 <section
-  class="relative grid-header w-full h-screen bg-cover bg-center bg-no-repeat"
+  class="grid-header w-full h-screen bg-cover bg-center bg-no-repeat"
   style="background-image: url('/background/fondo.png');"
 >
-  <Logo
-    class="animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear h-[300px] child"
-    size="md"
-  />
+  <div
+    class="flex justify-center items-center child animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear max-h-full overflow-hidden"
+  >
+    <Logo size="md" />
+  </div>
   <Countdown />
   <div class="flex flex-col items-center">
     <LocationButton />
@@ -62,17 +63,14 @@ const { isLoggedIn } = Astro.locals;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 2fr 1fr 1fr;
-    place-items: center;
+    align-items: center;
   }
 
   /* Tablets */
   @media (min-width: 769px) and (max-width: 1300px) {
     .grid-header {
-      grid-template-rows: 3fr 1fr 1fr;
-    }
-    .child(1) {
-      grid-row-start: 1;
-      grid-row-end: 2;
+      grid-template-rows: 3fr 1fr 1.5fr;
+      align-items: center;
     }
   }
 </style>

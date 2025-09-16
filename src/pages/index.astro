@@ -4,6 +4,10 @@ import NavBar from "../components/shared/NavBar.astro";
 import Header from "../components/Header.astro";
 import { siteConfig } from "../siteConfig";
 import Footer from "../components/shared/Footer.astro";
+import QYA from "../components/QYA.astro";
+import Oradores from "../components/Oradores.astro";
+import { oradores } from "../information/oradores";
+import { preguntasRespuestas } from "../information/preguntas-respuestas";
 
 const { title, description } = siteConfig;
 ---
@@ -34,9 +38,8 @@ const { title, description } = siteConfig;
     </div>
     <main class="flex flex-col justify-center min-h-screen items-center">
       <Header />
-      <div class="h-[400px] w-full bg-orange-500" id="oradores">hola</div>
-      <div class="h-[400px] w-full bg-orange-500" id="cronograma">hola</div>
-      <div class="h-[400px] w-full bg-orange-500" id="inscripcion">hola</div>
+      <Oradores oradores={oradores} />
+      <QYA questionAnswer={preguntasRespuestas} />
     </main>
     <Footer />
   </body>
