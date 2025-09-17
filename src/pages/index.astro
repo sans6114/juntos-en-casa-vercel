@@ -8,6 +8,8 @@ import QYA from "../components/QYA.astro";
 import Oradores from "../components/Oradores.astro";
 import { oradores } from "../information/oradores";
 import { preguntasRespuestas } from "../information/preguntas-respuestas";
+import Bienvenida from "../components/Bienvenida.astro";
+import Cronograma from "../components/Cronograma.astro";
 
 const { title, description } = siteConfig;
 ---
@@ -27,7 +29,7 @@ const { title, description } = siteConfig;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://juntosencasa.org" />
+    <meta property="og:url" content="https://juntosencasa.ivs.netlify.app" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
@@ -36,10 +38,22 @@ const { title, description } = siteConfig;
     <div class="max-w-7xl mx-auto relative z-20">
       <NavBar />
     </div>
-    <main class="flex flex-col justify-center min-h-screen items-center">
-      <Header />
-      <Oradores oradores={oradores} />
-      <QYA questionAnswer={preguntasRespuestas} />
+    <main
+      class="flex flex-col justify-center min-h-screen items-center overflow-hidden"
+    >
+      <section id="header" class="w-full">
+        <Header />
+      </section>
+      <Bienvenida />
+      <section id="oradores" class="w-full">
+        <Oradores oradores={oradores} />
+      </section>
+      <section id="cronograma" class="w-full">
+        <Cronograma />
+      </section>
+      <section id="preguntas">
+        <QYA questionAnswer={preguntasRespuestas} />
+      </section>
     </main>
     <Footer />
     <script>

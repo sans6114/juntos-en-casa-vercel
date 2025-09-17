@@ -7,7 +7,16 @@
   --color-primary: #e24329;
   --color-secondary: #ff7415;
 }
+html {
+  scroll-behavior: smooth;
+}
 
+/* Opcional: Personalizar la velocidad del scroll */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
 @theme {
   --font-sans: "Montserrat", "sans-serif";
 }

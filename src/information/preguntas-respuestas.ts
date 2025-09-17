@@ -7,14 +7,14 @@ export const preguntasRespuestas: QYA[] = [
       "Juntos en Casa es un evento virtual que reúne a expertos y profesionales para compartir conocimientos y experiencias sobre diversos temas de interés social y comunitario.",
   },
   {
-    titulo: "¿Cuándo y dónde se llevará a cabo el evento?",
+    titulo: "¿Donde es?",
     contenido:
-      "El evento se llevará a cabo el 15 de noviembre de 2024, de manera completamente virtual, permitiendo la participación desde cualquier lugar del mundo.",
+      "Calle 23, 1665 entre 66 y 67 (La Plata, Bs As). Zona Parque Castelli",
   },
   {
-    titulo: "¿Cómo puedo inscribirme en el evento?",
+    titulo: "¿Tiene un costo?",
     contenido:
-      "Puedes inscribirte en el evento visitando nuestra página web oficial y completando el formulario de inscripción. La inscripción es gratuita pero requiere registro previo.",
+      "La entrada a la conferencia es libre y gratuita con previa inscripción.",
   },
   {
     titulo: "¿Quiénes son los oradores principales?",
