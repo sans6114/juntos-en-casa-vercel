@@ -33,9 +33,12 @@ const { isLoggedIn } = Astro.locals;
   style="background-image: url('/background/fondo.png');"
 >
   <div
-    class="flex justify-center items-center child animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear max-h-full overflow-hidden"
+    class="child max-h-full overflow-hidden mx-auto flex justify-center items-center mt-12"
   >
-    <Logo size="md" />
+    <Logo
+      class="animate-wiggle animate-infinite animate-duration-[5000ms] animate-ease-linear"
+      size="md"
+    />
   </div>
   <Countdown />
   <div class="flex flex-col items-center">

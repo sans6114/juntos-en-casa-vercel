@@ -42,5 +42,14 @@ const { title, description } = siteConfig;
       <QYA questionAnswer={preguntasRespuestas} />
     </main>
     <Footer />
+    <script>
+      import AOS from "aos";
+      import "aos/dist/aos.css";
+
+      // ✅ Inicialización simple
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init();
+      });
+    </script>
   </body>
 </html>

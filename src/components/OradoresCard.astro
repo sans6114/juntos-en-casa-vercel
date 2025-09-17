@@ -7,15 +7,17 @@ interface Props {
 const { orador } = Astro.props;
 ---
 
-<div class="card lg:card-side shadow-2xl w-[300px] md:w-full">
+<div
+  data-aos="fade-left"
+  data-aos-delay="300"
+  data-aos-duration="6000"
+  class="card lg:card-side shadow-2xl border w-[300px] h-[500px] md:w-full"
+>
   <figure>
-    <img src={orador.imagen} alt="Album" />
+    <img class="object-top" src={orador.imagen} alt="Album" />
   </figure>
   <div class="card-body">
-    <h2 class="card-title">New album is released!</h2>
-    <p>Click the button to listen on Spotiwhy app.</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Listen</button>
-    </div>
+    <h2 class="card-title">{orador.nombre}</h2>
+    <p>{orador.descripcion}</p>
   </div>
 </div>
