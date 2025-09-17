@@ -1,9 +1,10 @@
 ---
+import { imagesCarousel } from "../information/imagenesCarousel";
 import Carousel from "./shared/Carousel.astro";
 import Logo from "./shared/Logo.astro";
 ---
 
-<div class="grid-bienvenida w-full h-screen overflow-hidden bg-black relative">
+<div class="relative grid-bienvenida w-full h-screen overflow-hidden bg-black">
   <!-- Texto que aparece después -->
   <div
     class="max-h-[300px] md:self-start children-1"
@@ -13,46 +14,15 @@ import Logo from "./shared/Logo.astro";
   >
     <Logo class="w-xs md:w-xl" />
   </div>
-  <!-- <div
-    class="flex flex-col gap-4 text-4xl md:text-6xl font-bold text-white drop-shadow-2xl mt-10 ml-4"
-  >
-    <span class="font-extrabold" data-aos="fade-down" data-aos-delay="300"
-      >Unidad</span
-    >
-    <span class="font-extrabold" data-aos="fade-down" data-aos-delay="500"
-      >Poder</span
-    >
-    <span class="font-extrabold" data-aos="fade-down" data-aos-delay="700"
-      >Renovación</span
-    >
-    <span class="font-extrabold" data-aos="fade-down" data-aos-delay="900"
-      >Sobrenatural</span
-    >
-    <span class="font-extrabold" data-aos="fade-down" data-aos-delay="1100"
-      >Desafiante</span
-    >
-  </div> -->
-
-  <div
-    data-aos="fade-right"
-    data-aos-delay="100"
-    data-aos-duration="800"
-    class="children-2"
-  >
-    <p class="text-white text-center font-semibold text-2xl px-10">
-      "Por eso les digo: dejen que el Espíritu Santo los guíe en la vida"<br />
-      Gálatas 5:25
-    </p>
-  </div>
-  <div class="children-3 flex justify-center">
-    <Carousel />
+  <div class="children-2 flex justify-center">
+    <Carousel images={imagesCarousel} />
   </div>
 </div>
 <style>
   .grid-bienvenida {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     gap: 8px;
 
     .children-1 {
@@ -65,11 +35,11 @@ import Logo from "./shared/Logo.astro";
     .children-2 {
       grid-column-start: 1;
       grid-row-start: 2;
-      grid-row-end: 3;
+      grid-row-end: 5;
     }
     .children-3 {
       grid-column-start: 1;
-      grid-row-start: 3;
+      grid-row-start: 4;
       grid-row-end: 5;
     }
   }
@@ -99,7 +69,8 @@ import Logo from "./shared/Logo.astro";
     }
   }
   .personaje {
-    bottom: -80px;
+    z-index: 100;
+    bottom: 40px;
     width: 300px;
   }
   /* Tablets grandes (1024px+) */

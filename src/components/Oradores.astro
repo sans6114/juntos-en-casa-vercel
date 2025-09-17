@@ -11,14 +11,7 @@ const { oradores } = Astro.props;
 ---
 
 <div class="px-4 py-8 flex flex-col gap-10">
-  <h2
-    data-aos="fade-down"
-    data-aos-anchor-placement="top-bottom"
-    data-aos-delay="500"
-    class="text-5xl font-bold leading-none md:ml-5"
-  >
-    Oradores
-  </h2>
+  <h2 class="text-5xl font-bold leading-none md:ml-5">Oradores</h2>
   <div class="grid-oradores overflow-hidden">
     {oradores.map((orador) => <OradoresCard orador={orador} />)}
   </div>

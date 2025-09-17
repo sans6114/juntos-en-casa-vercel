@@ -2,7 +2,11 @@
 import Heading from "../components/shared/Heading.astro";
 import InscripcionLayout from "../layout/InscripcionLayout.astro";
 
-const { user, inscripcion } = Astro.locals;
+const { user, inscripcion, isLoggedIn } = Astro.locals;
+if (!isLoggedIn) {
+  // Redirigir a la página de inicio de sesión si no está autenticado
+  Astro.redirect("/login");
+}
 ---
 
 <InscripcionLayout title="Inscripción - Juntos en Casa 2025">
@@ -56,160 +60,38 @@ const { user, inscripcion } = Astro.locals;
 
         <div class="flex flex-col gap-5">
           <p class="font-bold text-xl">A que iglesia perteneces?</p>
-
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <span class="label-text">Iglesia Vida Sobrenatural</span>
-              <input
-                type="radio"
-                name="tipoIglesia"
-                value="VS"
-                class="radio"
-                required
-                checked
-              />
-            </label>
-          </div>
-
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <span class="label-text">Otra iglesia</span>
-              <input
-                type="radio"
-                name="tipoIglesia"
-                value="otra"
-                class="radio"
-                required
-              />
-            </label>
-          </div>
-          <div
-            class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
-            id="iglesiaNombreContainer"
-          >
-            <input
-              id="iglesiaDifNombre"
-              name="iglesiaDifNombre"
-              type="text"
-              class="input mt-2 w-full validator"
-              placeholder="Nombre de tu congregación"
-              minlength="4"
-            />
-            <div class="validator-hint">
-              El nombre debe tener al menos 4 caracteres.
-            </div>
-          </div>
-
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <span class="label-text">No pertenezco a ninguna iglesia</span>
-              <input
-                name="tipoIglesia"
-                type="radio"
-                value="ninguna"
-                class="radio"
-                required
-              />
-            </label>
-          </div>
+          {
+            inscripcion?.iglesiaVS && (
+              <p class="font-bold text-md">
+                Perteneces a la iglesia Vida Sobrenatural
+              </p>
+            )
+          }
+          {
+            inscripcion?.iglesiaDif && (
+              <p class="font-bold text-md">
+                Perteneces a la iglesia: "{inscripcion.iglesiaDifNombre}"
+              </p>
+            )
+          }
         </div>
-
-        <button
-          id="register-btn"
-          type="submit"
-          class="btn btn-neutral disabled:opacity-50 mt-5"
-          >Cambiar Inscripción</button
-        >
       </fieldset>
     </form>
     <div class="relative self-start order-1 md:order-2 flex flex-col">
       <img
-        class="z-50 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
+        class="z-20 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
         src="/personaje/fuegoapuntandoizq.png"
         alt="personaje animado"
         srcset=""
       />
       <Heading
-        class="text-center md:text-6xl"
-        text="Bienvenido a la\ninscripción!"
+        class="text-start ml-3 md:ml-0 md:text-6xl"
+        text="Bienvenido a los datos de tu inscripción!"
       />
+      <p class="ml-3 w-60 md:w-full md:text-xl mt-5">
+        Estos son tus datos personales que cargaste al inscribirte en la
+        inscripción de la conferencia.
+      </p>
     </div>
   </section>
 </InscripcionLayout>
-<script>
-  import { actions } from "astro:actions";
-  import { navigate } from "astro:transitions/client";
-  import Swal from "sweetalert2";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.querySelector("form") as HTMLFormElement;
-    const btn = document.querySelector("#register-btn") as HTMLButtonElement;
-    const iglesiaNombreContainer = document.querySelector(
-      "#iglesiaNombreContainer"
-    ) as HTMLDivElement;
-    const iglesiaNombreInput = document.querySelector(
-      "#iglesiaDifNombre"
-    ) as HTMLInputElement;
-
-    formulario.addEventListener("change", (e) => {
-      const target = e.target as HTMLInputElement;
-
-      if (target.name === "tipoIglesia") {
-        if (target.value === "otra") {
-          // Mostrar con animación
-          iglesiaNombreContainer.classList.remove("max-h-0", "opacity-0");
-          iglesiaNombreContainer.classList.add("max-h-20", "opacity-100");
-          iglesiaNombreInput.required = true;
-        } else {
-          // Ocultar con animación
-          iglesiaNombreContainer.classList.remove("max-h-20", "opacity-100");
-          iglesiaNombreContainer.classList.add("max-h-0", "opacity-0");
-          iglesiaNombreInput.required = false;
-          iglesiaNombreInput.value = "";
-        }
-      }
-    });
-
-    formulario.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      btn.setAttribute("disabled", "true");
-
-      const formData = new FormData(formulario);
-      const tipoIglesia = formData.get("tipoIglesia") as string; // neceserio para eveluar como boolean
-      const dataToSend = {
-        name: formData.get("name") as string,
-        apellido: formData.get("apellido") as string,
-        edad: Number(formData.get("edad")),
-        email: formData.get("email") as string,
-        remember_me: formData.get("remember_me") === "on",
-        password: formData.get("password") as string,
-        iglesiaVS: tipoIglesia === "VS",
-        iglesiaNone: tipoIglesia === "ninguna",
-        iglesiaDif: tipoIglesia === "otra",
-        iglesiaDifNombre:
-          (formData.get("iglesiaDifNombre") as string) || undefined,
-      };
-      const { data: result, error } =
-        await actions.registerSuscribeUser(dataToSend);
-      if (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.message,
-        });
-        btn.removeAttribute("disabled");
-        return;
-      }
-      if (result.success) {
-        Swal.fire({
-          icon: "success",
-          title: "¡Inscripción exitosa!",
-          text: "Te has inscrito correctamente al evento.",
-          confirmButtonText: "Aceptar",
-        }).then(() => {
-          navigate("/");
-        });
-      }
-    });
-  });
-</script>
