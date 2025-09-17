@@ -8,7 +8,7 @@ const rememberMe = !!emailCookie;
 
 <InscripcionLayout title="Inscripción - Juntos en Casa 2025">
   <section
-    class="overflow-hidden py-10 flex flex-col md:flex-row items-center justify-center md:px-4 md:gap-10"
+    class="overflow-hidden py-10 flex flex-col md:flex-row items-center justify-center md:px-4 md:gap-10 mt-20"
   >
     <form action="" class="order-2 md:order-1 mt-10 md:mt-0">
       <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
@@ -148,15 +148,19 @@ const rememberMe = !!emailCookie;
     </form>
     <div class="relative self-start order-1 md:order-2 flex flex-col">
       <img
-        class="z-50 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
+        class="z-20 absolute right-[-3.2rem] top-[-2rem] w-48 md:w-[300px] xl:w-[600px] order-1 md:order-2"
         src="/personaje/fuegoapuntandoizq.png"
         alt="personaje animado"
         srcset=""
       />
       <Heading
-        class="text-center md:text-6xl"
+        class="text-start ml-3 md:ml-0 md:text-6xl"
         text="Bienvenido a la\ninscripción!"
       />
+      <p class="ml-3 w-60 md:w-full md:text-xl mt-5">
+        Cargá tus datos personales y creá tu usuario y contraseña para
+        inscribirte en la conferencia.
+      </p>
     </div>
   </section>
 </InscripcionLayout>

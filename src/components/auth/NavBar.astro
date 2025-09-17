@@ -3,17 +3,10 @@ import Logo from "../shared/Logo.astro";
 import PrimaryButton from "../shared/PrimaryButton.astro";
 ---
 
-<div class="navbar shadow-accent-content bg-black px-10 h-20">
-  <div class="flex-1">
-    <PrimaryButton
-      tamanio="md"
-      href="/"
-      text="Volver atrás"
-      class="md:btn-md btn-sm"
-      iconName="mdi:arrow-left-bold"
-    />
-  </div>
-  <div class="flex-none">
+<div
+  class="navbar shadow-accent-content bg-black px-10 h-20 flex justify-center items-center fixed top-0 left-0 right-0 z-50"
+>
+  <a href="/" class="flex-none">
     <Logo size="xs" />
-  </div>
+  </a>
 </div>

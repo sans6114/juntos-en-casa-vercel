@@ -1,14 +1,33 @@
 @import "tailwindcss";
 @import "tailwindcss-animated";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: [ "light"]; /* ✅ Solo permitir tema light */
+  base: true;
+  styled: true;
+  utils: true;
+  prefix: "";
+  logs: true;
+  themeroot: ":root";
+}
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #e24329;
   --color-secondary: #ff7415;
 }
+
+/* ✅ Forzar siempre tema light */
 html {
   scroll-behavior: smooth;
+  color-scheme: light only; /* Evita que el navegador aplique dark mode */
+}
+
+/* ✅ Sobrescribir cualquier intento de dark mode */
+html[data-theme],
+html[data-theme="dark"],
+.dark {
+  color-scheme: light !important;
 }
 
 /* Opcional: Personalizar la velocidad del scroll */
@@ -17,6 +36,7 @@ html {
     scroll-behavior: smooth;
   }
 }
+
 @theme {
   --font-sans: "Montserrat", "sans-serif";
 }
