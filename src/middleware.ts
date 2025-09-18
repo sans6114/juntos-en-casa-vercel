@@ -6,7 +6,6 @@ import {
 } from './firebase/server';
 import type { Inscripcion } from './interfaces';
 
-const adminRoutes = ['/admin/1'];
 const privateRoutes = ['/mi-inscripcion'];
 const publicRoutes = ['/login', '/inscripcion'];
 
@@ -63,7 +62,7 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
         }
     }
 
-    if(!locals.isAdmin && adminRoutes.includes(url.pathname)) {
+    if(!locals.isAdmin && url.pathname.startsWith('/admin')) {
         return redirect('/');
     }
     if (!locals.isLoggedIn && privateRoutes.includes(url.pathname)) {

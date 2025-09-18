@@ -5,6 +5,12 @@ import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
 import EstadisticasDatos from "../../components/admin/EstadisticasDatos.astro";
 const response = await getInscripcionesStats();
 const date = response.inscripciones;
+const { isAdmin } = Astro.locals;
+if (!isAdmin) {
+  alert("No tienes permiso para acceder a esta página.");
+  Astro.redirect("/login");
+  return;
+}
 ---
 
 <AdminLayout>
