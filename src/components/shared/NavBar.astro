@@ -141,6 +141,9 @@ const { isLoggedIn, isAdmin } = Astro.locals;
     if (logoutButton) {
       logoutButton.addEventListener("click", async () => {
         await actions.logoutUser();
+        document.cookie = "idToken=; Max-Age=0; path=/;";
+
+        // Forzar nueva request SSR para refrescar Astro.locals
         window.location.href = "/";
       });
     }

@@ -1,7 +1,9 @@
 import { defineMiddleware } from 'astro:middleware';
 
-import { firebase } from './firebase/config';
-import { firestoreAdmin } from './firebase/server';
+import {
+  authAdmin,
+  firestoreAdmin,
+} from './firebase/server';
 import type { Inscripcion } from './interfaces';
 
 const adminRoutes = ['/admin/1'];
@@ -10,18 +12,36 @@ const publicRoutes = ['/login', '/inscripcion'];
 
 
 export const onRequest = defineMiddleware(async ({ request, url, locals, redirect }, next) => {
+    const authHeader = request.headers.get('Authorization') || '';
+    let idToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+
+      if (!idToken) {
+    const cookieHeader = request.headers.get('cookie') || '';
+    const cookies = Object.fromEntries(
+      cookieHeader.split(';').map(p => p.trim().split('=').map(decodeURIComponent)).filter(([k]) => k)
+    );
+    idToken = (cookies['idToken'] as string) || '';
+  }
+
     //valores por defecto, esto para que no queden undefined
     locals.isLoggedIn = false;
     locals.isAdmin = false;
     locals.user = null;
-
-    const user = firebase.auth.currentUser;
-
-    if (user) {
+    locals.inscripcion = null;
+    if (idToken) {
         try {
-            const tokenResult = await user.getIdTokenResult();
-            const customClaims = tokenResult.claims;
-            const docRef = firestoreAdmin.doc(`inscripciones/${user.uid}`)
+            const decodedToken = await authAdmin.verifyIdToken(idToken);
+            const userRecord = await authAdmin.getUser(decodedToken.uid);
+            const customClaims = userRecord.customClaims || (decodedToken as any);
+            locals.isLoggedIn = true;
+            locals.isAdmin = !!customClaims?.admin;
+            locals.user = {
+                uid: userRecord.uid,
+                email: userRecord.email as string | null,
+                name: userRecord.displayName as string | null,
+                avatar: userRecord.photoURL as string | null,
+            };
+            const docRef = firestoreAdmin.doc(`inscripciones/${decodedToken.uid}`)
             const docSnap = await docRef.get();
             if(docSnap.exists) {
                 const inscripcion = docSnap.data() as Inscripcion;
@@ -37,10 +57,8 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
                 }
             }
 
-            locals.isLoggedIn = true;
-            locals.isAdmin = !!customClaims.admin;
         } catch (error) {
-            console.error('Error getting user token:', error);
+            console.error('Error verifying ID token:', error);
             // En caso de error, mantener como no logueado
         }
     }

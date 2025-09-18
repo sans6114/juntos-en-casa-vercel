@@ -87,8 +87,11 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
       btn.setAttribute("disabled", "true");
       const formData = new FormData(formulario);
       const { data, error } = await actions.loginUser(formData);
-      if (!data.ok) {
-        throw new Error(data.msg);
+      if (data?.ok && data.idToken) {
+      } else {
+        btn.removeAttribute("disabled");
+        throw new Error(data?.msg);
+        return;
       }
       // Redirigir al usuario a la página de administración
       window.location.replace("/admin/1");
@@ -110,7 +113,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
           throw new Error(error.message);
         }
         btnGoogle.innerText = "Redirecting...";
-        window.location.replace("/admin");
+        window.location.replace("/admin/1");
       } catch (error) {
         console.error(error);
       }

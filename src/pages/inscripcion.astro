@@ -22,7 +22,7 @@ const rememberMe = !!emailCookie;
           required
           minlength="2"
           maxlength="50"
-          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ]+)*$"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+(?: [A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+)*$"
         />
         <div class="validator-hint">Tu nombre debe contener solo letras.</div>
 
@@ -35,7 +35,7 @@ const rememberMe = !!emailCookie;
           required
           minlength="2"
           maxlength="50"
-          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+(?: [A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+)*$"
         />
         <div class="validator-hint">Tu apellido debe contener solo letras.</div>
 

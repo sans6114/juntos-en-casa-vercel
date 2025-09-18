@@ -63,13 +63,21 @@ export const registerSuscribeUser = defineAction({
         iglesiaDifNombre: iglesiaDifNombre || null, // Usar null en lugar de undefined
         timestamp: new Date()
       });
-      
+      const idToken = await userCredential.user.getIdToken(true);
+      cookies.set('idToken', idToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        maxAge: remember_me ? 60 * 60 * 24 * 7 : undefined, // 7 días
+      });
       return {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
         displayName: `${name} ${apellido}`,
         inscripcionId: incripcionRef.id,
-        success: true
+        success: true,
+        idToken
       };
     } catch (error) {
       // Si algo falla Y ya se creó el usuario, eliminarlo

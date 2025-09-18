@@ -26,11 +26,21 @@ export const loginUser = defineAction({
     } 
     try {
       const userCredential = await signInWithEmailAndPassword(firebase.auth, email, password);
+      const idToken = await userCredential.user.getIdToken(true);
+      cookies.set('idToken', idToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        maxAge: remember_me ? 60 * 60 * 24 * 7 : undefined, // 7 días
+      });
       if(userCredential.user) {
         return { ok: true, msg: 'Usuario logeado', user: {
           uid: userCredential.user.uid,
           email: userCredential.user.email,
-        }}
+        },
+        idToken
+      };
       }
     } catch (error) {
       const firebaseError = error as AuthError

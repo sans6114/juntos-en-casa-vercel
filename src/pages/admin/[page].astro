@@ -3,87 +3,75 @@ import type { GetStaticPaths } from "astro";
 import AdminLayout from "../../layout/AdminLayout.astro";
 import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
 import EstadisticasDatos from "../../components/admin/EstadisticasDatos.astro";
-export const prerender = true;
-export const getStaticPaths = (async ({ paginate }) => {
-  const response = await getInscripcionesStats();
-  if (!response) {
-    throw new Error("No se pudieron obtener las estadísticas de inscripciones");
-    return [];
-  }
-  return paginate(response.inscripciones, { pageSize: 10 ,
-  props: {
-      response
-    }
-  });
-}) satisfies GetStaticPaths;
-
-const { page, response } = Astro.props;
+const response = await getInscripcionesStats();
+const date = response.inscripciones;
 ---
 
 <AdminLayout>
-    {page && page.data ? (
-    <table class="table table-xs md:table-md" slot="admin-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Edad</th>
-          <th>Iglesia</th>
-          <th>Fecha</th>
-        </tr>
-      </thead>
-      <tbody>
-        {page.data.map((inscripcion, idx) => (
+  {
+    date && date ? (
+      <table class="table table-xs md:table-md" slot="admin-table">
+        <thead>
           <tr>
-            <th>{idx + 1}</th>
-            <td>{inscripcion.name}</td>
-            <td>{inscripcion.apellido}</td>
-            <td>{inscripcion.edad}</td>
-            <td>
-              {inscripcion.iglesiaVS
-                ? "Vida Sobrenatural"
-                : inscripcion.iglesiaDif
-                ? inscripcion.iglesiaDifNombre
-                : inscripcion.iglesiaNone
-                ? "Sin iglesia"
-                : ""}
-            </td>
-            <td>
-              {inscripcion.timestamp
-                ? new Date(inscripcion.timestamp).toLocaleDateString()
-                : ""}
-            </td>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Iglesia</th>
+            <th>Fecha</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-
-    <div class="join flex justify-center my-8">
-      <a
-        href={page.url.prev}
-        class={`join-item btn ${
-          page.currentPage === 1
-            ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed"
-            : ""
-        }`}
-      >
-        « anteriores
-      </a>
-      <button class="join-item btn">{page.currentPage}</button>
-      <a
-        href={page.url.next}
-        class={`join-item btn ${
-          page.currentPage === page.lastPage ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed" : ""
-        }`}
-      >
-        siguientes »
-      </a>
-    </div>
-  ) : (
-    <div class="text-center p-8">
-      <p>Error: No se pudieron cargar los datos de paginación.</p>
-    </div>
-  )}
+        </thead>
+        <tbody>
+          {date.map((inscripcion, idx) => (
+            <tr>
+              <th>{idx + 1}</th>
+              <td>{inscripcion.name}</td>
+              <td>{inscripcion.apellido}</td>
+              <td>{inscripcion.edad}</td>
+              <td>
+                {inscripcion.iglesiaVS
+                  ? "Vida Sobrenatural"
+                  : inscripcion.iglesiaDif
+                    ? inscripcion.iglesiaDifNombre
+                    : inscripcion.iglesiaNone
+                      ? "Sin iglesia"
+                      : ""}
+              </td>
+              <td>
+                {inscripcion.timestamp
+                  ? new Date(inscripcion.timestamp).toLocaleDateString()
+                  : ""}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      // <div class="join flex justify-center my-8">
+      //   <a
+      //     href={date.url.prev}
+      //     class={`join-item btn ${
+      //       page.currentPage === 1
+      //         ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed"
+      //         : ""
+      //     }`}
+      //   >
+      //     « anteriores
+      //   </a>
+      //   <button class="join-item btn">{page.currentPage}</button>
+      //   <a
+      //     href={page.url.next}
+      //     class={`join-item btn ${
+      //       page.currentPage === page.lastPage ? "bg-gray-600 text-gray-400 hover:cursor-not-allowed" : ""
+      //     }`}
+      //   >
+      //     siguientes »
+      //   </a>
+      // </div>
+      <div class="text-center p-8">
+        <p>Error: No se pudieron cargar los datos de paginación.</p>
+      </div>
+    )
+  }
   <EstadisticasDatos stats={response} slot="admin-stats" />
 </AdminLayout>
