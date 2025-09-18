@@ -25,18 +25,18 @@ const { title } = Astro.props;
   </head>
   <body>
     <NavBar />
-    <main class="max-w-7xl mx-auto px-4 py-10 min-h-screen">
+    <main class="max-w-7xl mx-auto px-4 py-10 min-h-screen mt-20">
       <Heading
         text="Panel de Administración"
         class="text-4xl text-center mb-10"
       />
-      <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+      <div class="flex flex-col items-center justify-center gap-10">
+        <div>
+          <slot name="admin-stats" />
+        </div>
         <div class="overflow-x-auto mt-10">
           <slot name="admin-table" />
           <slot name="admin-pdf" />
-        </div>
-        <div>
-          <slot name="admin-stats" />
         </div>
       </div>
     </main>

@@ -16,7 +16,7 @@ if (!isAdmin) {
 <AdminLayout>
   {
     date && date ? (
-      <table class="table table-xs md:table-md" slot="admin-table">
+      <table class="table table-xs md:table-md p-4" slot="admin-table">
         <thead>
           <tr>
             <th>#</th>
@@ -24,7 +24,6 @@ if (!isAdmin) {
             <th>Apellido</th>
             <th>Edad</th>
             <th>Iglesia</th>
-            <th>Fecha</th>
           </tr>
         </thead>
         <tbody>
@@ -42,11 +41,6 @@ if (!isAdmin) {
                     : inscripcion.iglesiaNone
                       ? "Sin iglesia"
                       : ""}
-              </td>
-              <td>
-                {inscripcion.timestamp
-                  ? new Date(inscripcion.timestamp).toLocaleDateString()
-                  : ""}
               </td>
             </tr>
           ))}

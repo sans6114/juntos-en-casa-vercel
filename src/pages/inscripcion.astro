@@ -22,7 +22,7 @@ const rememberMe = !!emailCookie;
           required
           minlength="2"
           maxlength="50"
-          pattern="^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+(?: [A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+)*$"
+          pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\u0300-\u036F]+(?: [A-Za-zÀ-ÖØ-öø-ÿ\u0300-\u036F]+)*$"
         />
         <div class="validator-hint">Tu nombre debe contener solo letras.</div>
 
@@ -141,7 +141,7 @@ const rememberMe = !!emailCookie;
           type="submit"
           class="btn btn-neutral disabled:opacity-50 mt-5">Inscribirme</button
         >
-        <a href="/login" class="link link-secondary"
+        <a href="/login" class="link link-secondary text-sm font-semibold"
           >Ya te inscribiste antes? accede con tu cuenta!</a
         >
       </fieldset>

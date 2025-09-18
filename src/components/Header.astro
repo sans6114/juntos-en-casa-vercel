@@ -22,11 +22,10 @@ const btnInfoNoInscripto = {
 const btnInfoInscripto = {
   href: "/mi-inscripcion",
   text: "Mi Inscripción",
-  iconName: "mdi:account-check-outline",
+  iconName: "mdi:user-check",
   class: "mr-4 sm:btn-xl",
 };
 const { isLoggedIn } = Astro.locals;
-console.log(isLoggedIn);
 ---
 
 <div
@@ -47,7 +46,7 @@ console.log(isLoggedIn);
     <div class="mt-4 flex items-center">
       {
         isLoggedIn ? (
-          <PrimaryButton {...btnInfoInscripto} tamanio="sm" />
+          <PrimaryButton {...btnInfoInscripto} tamanio="md" />
         ) : (
           <PrimaryButton {...btnInfoNoInscripto} tamanio="md" />
         )

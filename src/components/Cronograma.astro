@@ -1,5 +1,6 @@
 ---
 import PrimaryButton from "./shared/PrimaryButton.astro";
+const { isLoggedIn } = Astro.locals;
 ---
 
 <!-- component -->
@@ -116,13 +117,25 @@ import PrimaryButton from "./shared/PrimaryButton.astro";
           class="mx-auto -mt-36 md:-mt-36 md: w-[400px]"
           src="/personaje/fuegoapuntandoizq.png"
         />
-        <PrimaryButton
-          href="/inscripcion"
-          text="Inscribirme"
-          iconName="mdi:text-box-plus"
-          class="mx-auto mt-4 btn-lg"
-          tamanio="lg"
-        />
+        {
+          isLoggedIn ? (
+            <PrimaryButton
+              href="/mi-inscripcion"
+              text="Mi inscripción"
+              iconName="mdi:user-check"
+              class="mx-auto mt-4 btn-lg"
+              tamanio="lg"
+            />
+          ) : (
+            <PrimaryButton
+              href="/inscripcion"
+              text="Inscribirme"
+              iconName="mdi:text-box-plus"
+              class="mx-auto mt-4 btn-lg"
+              tamanio="lg"
+            />
+          )
+        }
       </div>
     </div>
   </div>
