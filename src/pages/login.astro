@@ -6,7 +6,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
 ---
 
 <InscripcionLayout title="Login">
-  <form class="flex flex-col items-center my-10 p-10" action="">
+  <form class="flex flex-col items-center my-20 p-10" action="">
     <fieldset class="fieldset bg-base-200 rounded-box w-xs border-2 p-4">
       <legend class="fieldset-legend text-2xl font-bold"
         >Entrar a tu cuenta</legend
@@ -29,7 +29,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
         placeholder="Contraseña"
       />
 
-      <button
+      <!-- <button
         id="login-google-button"
         class="btn bg-white text-black border border-gray-500 mt-4"
       >
@@ -55,12 +55,12 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
           ></svg
         >
         Login with Google
-      </button>
+      </button> -->
 
       <button
         type="submit"
         id="login-button"
-        class="btn btn-neutral disabled:opacity-50">Login</button
+        class="btn btn-neutral disabled:opacity-50 mt-4">Login</button
       >
       <a href="/inscripcion" class="btn btn-link"
         >No estas inscripto? inscribite!</a
@@ -99,6 +99,7 @@ const emailCookie = Astro.cookies.get("email")?.value || "";
     });
 
     //google signin
+
     btnGoogle.addEventListener("click", async (e) => {
       e.preventDefault();
       btnGoogle.setAttribute("disabled", "true");
