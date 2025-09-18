@@ -1,29 +1,50 @@
+// src/middleware/index.ts
 import { defineMiddleware } from 'astro:middleware';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
 
-import { firebase } from './firebase/config';
-import { firestoreAdmin } from './firebase/server';
+import { app } from './firebase/server';
 import type { Inscripcion } from './interfaces';
+
+const authAdmin = getAuth(app);
+const firestoreAdmin = getFirestore(app);
 
 const adminRoutes = ['/admin/1'];
 const privateRoutes = ['/mi-inscripcion'];
 const publicRoutes = ['/login', '/inscripcion'];
 
-
 export const onRequest = defineMiddleware(async ({ request, url, locals, redirect }, next) => {
-    //valores por defecto, esto para que no queden undefined
+    const authHeader = request.headers.get("Authorization");
+    const idToken = authHeader?.split('Bearer ')[1];
+
     locals.isLoggedIn = false;
     locals.isAdmin = false;
     locals.user = null;
+    locals.inscripcion = null;
 
-    const user = firebase.auth.currentUser;
-
-    if (user) {
+    if (idToken) {
         try {
-            const tokenResult = await user.getIdTokenResult();
-            const customClaims = tokenResult.claims;
-            const docRef = firestoreAdmin.doc(`inscripciones/${user.uid}`)
+            const decodedToken = await authAdmin.verifyIdToken(idToken);
+            const customClaims = decodedToken.customClaims;
+            
+            // 💡 Paso clave: Obtener el perfil completo del usuario
+            const userRecord = await authAdmin.getUser(decodedToken.uid);
+
+            locals.isLoggedIn = true;
+            locals.isAdmin = !!customClaims?.admin;
+            // 💡 Asignar un objeto que coincida con tu tipo 'User'
+            locals.user = {
+                uid: userRecord.uid,
+                email: userRecord.email,
+                name: userRecord.displayName, // El nombre está en displayName
+                avatar: userRecord.photoURL, // La URL del avatar está en photoURL
+                // Agrega otras propiedades que necesites
+            };
+
+            const docRef = firestoreAdmin.doc(`inscripciones/${decodedToken.uid}`);
             const docSnap = await docRef.get();
-            if(docSnap.exists) {
+            
+            if (docSnap.exists) {
                 const inscripcion = docSnap.data() as Inscripcion;
                 locals.inscripcion = {
                     name: inscripcion.name,
@@ -34,29 +55,22 @@ export const onRequest = defineMiddleware(async ({ request, url, locals, redirec
                     iglesiaDif: inscripcion.iglesiaDif,
                     iglesiaDifNombre: inscripcion.iglesiaDifNombre,
                     timestamp: inscripcion.timestamp
-                }
+                };
             }
-
-            locals.isLoggedIn = true;
-            locals.isAdmin = !!customClaims.admin;
         } catch (error) {
-            console.error('Error getting user token:', error);
-            // En caso de error, mantener como no logueado
+            console.error('Error verifying token or fetching user:', error);
         }
     }
 
-    if(!locals.isAdmin && adminRoutes.includes(url.pathname)) {
-        return redirect('/');
+    if (!locals.isAdmin && adminRoutes.includes(url.pathname)) {
+        return redirect('/login');
     }
     if (!locals.isLoggedIn && privateRoutes.includes(url.pathname)) {
         return redirect('/login');
     }
-
     if (locals.isLoggedIn && publicRoutes.includes(url.pathname)) {
         return redirect('/mi-inscripcion');
     }
 
     return next();
 });
-
-
