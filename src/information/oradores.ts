@@ -12,7 +12,7 @@ export const oradores: Orador[]  = [
     descripcion: "Descripción del Orador 1",
   },
        {
-    nombre: "Josias García",
+    nombre: "Josías García",
     imagen: "/oradores/josias.webp",
     descripcion: "Descripción del Orador 3",
   },

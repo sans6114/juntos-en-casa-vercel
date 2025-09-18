@@ -1,5 +1,5 @@
 ---
-
+import PrimaryButton from "./shared/PrimaryButton.astro";
 ---
 
 <!-- component -->
@@ -43,7 +43,7 @@
             <div class="order-1 w-5/12 px-1 py-4 text-right">
               <p class="mb-3 text-base text-yellow-300">Viernes 26 - 19:30</p>
               <h4 class="mb-3 font-bold text-lg md:text-2xl">
-                Inicio del evento
+                INICIO DEL EVENTO
               </h4>
               <p
                 class="text-sm md:text-base leading-snug text-gray-50 text-opacity-100"
@@ -65,60 +65,65 @@
               <p
                 class="text-sm md:text-base leading-snug text-gray-50 text-opacity-100"
               >
-                SESION 2. Tendremos talleres para profundizar en los temas
-                centrales del encuentro.
+                Comenzaremos con varias sorpresas y luego compartiremos un
+                tiempo poderoso recibiendo una palabra que tocará toda nuestra
+                vida en la Sesión 2. Luego pasaremos a un tiempo especial de
+                talleres a elección.
               </p>
             </div>
           </div>
 
           <!-- Sábado 27 - Tarde -->
           <div
-            data-aos="fade-down"
-            data-aos-delay="600"
             class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline"
           >
             <div class="order-1 w-5/12"></div>
             <div class="order-1 w-5/12 px-1 py-4 text-right">
               <p class="mb-3 text-base text-yellow-300">Sábado 27 - 17:00</p>
-              <h4 class="mb-3 font-bold text-lg md:text-2xl">SESION 3</h4>
+              <h4 class="mb-3 font-bold text-lg md:text-2xl">BLOQUE 3</h4>
               <p
                 class="text-sm md:text-base leading-snug text-gray-50 text-opacity-100"
               >
-                Break para merienda, dinámicas grupales, adoración y la SESION
-                3. Luego otro break, más adoración y la SESION 4 hasta el cierre
-                a las 22:00.
+                Comenzaremos con la merienda y luego disfrutaremos un tiempo
+                juntos antes de recibir la Sesión 3, con una palabra que
+                ampliará nuestros horizontes. <br /> La jornada cerrará con un tiempo
+                de impartición en la Noche del Espíritu Santo.
               </p>
             </div>
           </div>
 
           <!-- Domingo 28 -->
           <div
-            data-aos="fade-down"
-            data-aos-delay="800"
             class="mb-8 flex justify-between items-center w-full right-timeline"
           >
             <div class="order-1 w-5/12"></div>
             <div class="order-1 w-5/12 px-1 py-4">
               <p class="mb-3 text-base text-yellow-300">Domingo 28 - 10:30</p>
               <h4 class="mb-3 font-bold text-lg md:text-2xl text-left">
-                Cierre del Encuentro
+                CIERRE DEL EVENTO
               </h4>
               <p
                 class="text-sm md:text-base leading-snug text-gray-50 text-opacity-100"
               >
-                Culminamos con adoración y la Sesión 5 final, donde
-                consolidaremos todo lo aprendido y experimentado durante estos
-                días transformadores.
+                Culminaremos con un tiempo especial de adoración y la Sesión 5,
+                en donde consolidaremos todo lo recibido y seremos impulsados a
+                compartirlo con otros.
               </p>
             </div>
           </div>
         </div>
         <img
           data-aos="fade-down"
-          data-aos-delay="1200"
           alt="Personaje fuego apuntando izquierda"
           class="mx-auto -mt-36 md:-mt-36"
           src="/personaje/fuegoapuntandoizq.png"
+        />
+        <PrimaryButton
+          href="/inscripcion"
+          text="Inscribirme"
+          iconName="mdi:text-box-plus"
+          class="mx-auto mt-4 btn-lg"
+          tamanio="lg"
         />
       </div>
     </div>

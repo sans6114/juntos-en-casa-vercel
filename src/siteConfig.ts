@@ -1,26 +1,24 @@
 export const siteConfig = {
   // Información básica del sitio
   title: "Juntos en Casa - Conferencia Cristiana 2025",
-  description: "Únete a nuestra conferencia cristiana de jovenes y adolescentes, con oradores increibles, adoración y unidad. 26 de septiembre 2025.",
+  description: "Únete a nuestra conferencia cristiana de jóvenes y adolescentes, con oradores increíbles, adoración y unidad. 26 de septiembre 2025.",
   
   // SEO Meta
   siteName: "Juntos en Casa",
-  siteUrl: "https://tu-dominio.com", // Cambia por tu dominio
+  siteUrl: "https://juntosencasaivs.netlify.app/ ", // Cambia por tu dominio
   locale: "es-AR",
   
   // Autor/Organización
   author: {
-    name: "Iglesia Juntos en Casa",
+    name: "Iglesia Vida Sobrenatural",
     email: "contacto@juntosencasa.com",
     url: "https://tu-dominio.com"
   },
   
   // Social Media
   social: {
-    twitter: "@juntosencasa",
-    facebook: "https://facebook.com/juntosencasa",
-    instagram: "https://instagram.com/juntosencasa",
-    youtube: "https://youtube.com/@juntosencasa"
+    instagram: "https://www.instagram.com/juntosencasa.ivs/",
+    youtube: "https://www.youtube.com/@vidasobrenatural"
   },
   
   // Open Graph
@@ -29,7 +27,7 @@ export const siteConfig = {
     siteName: "Juntos en Casa",
     title: "Conferencia Cristiana 2025 - Juntos en Casa",
     description: "Únete a nuestra conferencia cristiana anual con oradores inspiradores, adoración y comunión. 26 de septiembre 2025.",
-    image: "/og-image.jpg", // Imagen 1200x630px
+    image: "/logos/logonegro.png", // Imagen 1200x630px
     imageAlt: "Conferencia Juntos en Casa 2025"
   },
   
@@ -48,8 +46,8 @@ export const siteConfig = {
         lng: -58.3816
       }
     },
-    organizer: "Iglesia Juntos en Casa",
-    price: "Entrada gratuita", // o "AR$ 1500"
+    organizer: "Iglesia Vida Sobrenatural",
+    price: "Entrada gratuita",
     category: "Religión y Espiritualidad"
   },
   

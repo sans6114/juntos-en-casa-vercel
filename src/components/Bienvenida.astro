@@ -7,15 +7,31 @@ import Logo from "./shared/Logo.astro";
 <div class="relative grid-bienvenida w-full h-screen overflow-hidden bg-black">
   <!-- Texto que aparece después -->
   <div
-    class="max-h-[300px] md:self-start children-1"
+    class="max-h-[300px] md:self-start self-center children-1"
     data-aos="fade-right"
     data-aos-delay="100"
     data-aos-duration="800"
   >
     <Logo class="w-xs md:w-xl" />
   </div>
-  <div class="children-2 flex justify-center">
-    <Carousel images={imagesCarousel} />
+  <div
+    data-aos="fade-up"
+    data-aos-duration="800"
+    class="children-2 flex justify-center px-6"
+  >
+    <!-- <Carousel images={imagesCarousel} /> -->
+    <p class="text-white text-center font-semibold text-2xl px-4">
+      "Por eso les digo: dejen que el Espíritu Santo los guíe en la vida"<br />
+
+      Gálatas 5:25
+    </p>
+  </div>
+  <div data-aos="fade-up" data-aos-delay="200" class="children-3">
+    <img
+      src="/personaje/llama.svg"
+      alt="Personaje"
+      class="absolute h-[500px] w-[500px]"
+    />
   </div>
 </div>
 <style>
@@ -36,6 +52,7 @@ import Logo from "./shared/Logo.astro";
       grid-column-start: 1;
       grid-row-start: 2;
       grid-row-end: 5;
+      align-self: center;
     }
     .children-3 {
       grid-column-start: 1;
@@ -61,10 +78,6 @@ import Logo from "./shared/Logo.astro";
         grid-row-start: 4;
       }
       .children-3 {
-        grid-column: span 2 / span 2;
-        grid-row: span 4 / span 4;
-        grid-column-start: 4;
-        grid-row-start: 2;
       }
     }
   }

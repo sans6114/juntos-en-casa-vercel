@@ -12,7 +12,7 @@ const { images } = Astro.props;
 <div class="carousel carousel-vertical rounded-box h-96">
   {
     images.map((image) => (
-      <div class="relative carousel-item h-full">
+      <div class="relative carousel-item h-full rounded-2xl">
         <img class="object-contain blur-xs" src={image.url} alt={image.text} />
         <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold text-center">
           {image.text}

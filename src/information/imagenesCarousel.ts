@@ -24,7 +24,7 @@ export const imagesCarousel: Image[] = [
         text: 'sobrenatural'
     },
     {
-        url: '/eventosAnteriores/foto7.webp',
+        url: '/eventosAnteriores/foto4.webp',
         text: 'transformación'
     },
         {

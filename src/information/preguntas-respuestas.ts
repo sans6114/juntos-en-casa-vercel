@@ -7,7 +7,7 @@ export const preguntasRespuestas: QYA[] = [
       "\"Juntos en Casa\" es la conferencia de los adolescentes y jóvenes de Vida Sobrenatural. Este tiempo fue pensado para disfrutar, reír, crecer más y más en nuestra relación con Dios y adorar juntos a Jesús!!",
   },
   {
-    titulo: "¿Donde es?",
+    titulo: "¿Dónde es?",
     contenido:
       "En calle 23 Nº1665 entre 66 y 67 (zona Parque Castelli). La Plata, Bs As.",
   },
