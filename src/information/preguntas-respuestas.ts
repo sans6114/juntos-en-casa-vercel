@@ -4,7 +4,7 @@ export const preguntasRespuestas: QYA[] = [
   {
     titulo: "¿Qué es Juntos en Casa?",
     contenido:
-      "Juntos en Casa es la Conferencia de adolescentes y jóvenes de Iglesia Vida Sobrenatural. Fue creada para crecer en unidad, ir más profundo en Dios y ser equipados para el desarrollo de nuestro propósito. También disfrutaremos de juegos, dinámicas y talleres especialmente planificados para adolescentes y jóvenes.",
+      "Juntos en Casa es la Conferencia de adolescentes y jóvenes de Iglesia Vida Sobrenatural. Fue creada para crecer en unidad, ir más profundo en Dios y ser equipados para el desarrollo de nuestro propósito. También disfrutaremos de juegos, dinámicas y talleres especialmente planificados por y para adolescentes y jóvenes.",
   },
     {
     titulo: "¿La actividad es abierta?",
