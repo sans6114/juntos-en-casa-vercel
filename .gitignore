@@ -5,14 +5,12 @@ dist/
 
 # dependencies
 node_modules/
-
+_secrets/
 # logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-_secrets/
 
 # environment variables
 .env

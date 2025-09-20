@@ -2,10 +2,10 @@ import icon from 'astro-icon';
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import netlify from '@astrojs/netlify';
+import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
-import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,12 +14,14 @@ export default defineConfig({
   },
 
   output: 'server',
-  adapter: netlify(),
+
   integrations: [icon({
     iconDir: "./src/icons",
     include: {
         // Incluir el conjunto de iconos MDI
         mdi: ['*'], // Esto incluye todos los 
       }
-  }), react()]
+  }), react()],
+
+  adapter: vercel()
 });
