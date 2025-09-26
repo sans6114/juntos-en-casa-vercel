@@ -9,4 +9,6 @@ export interface Stats {
     rango12a17: number;
     rango18a25: number;
     rangoMas25: number;
+    nombresIglesiasDif?: string[];
+    cantidadIglesiasDif: number
 }

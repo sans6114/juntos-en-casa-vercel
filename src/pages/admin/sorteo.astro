@@ -1,0 +1,53 @@
+---
+import "../../styles/global.css";
+import { Sorteo as ComponentSorteoReact } from "../../components/admin/Sorteo";
+import Heading from "../../components/shared/Heading.astro";
+import Footer from "../../components/shared/Footer.astro";
+import NavBar from "../../components/auth/NavBar.astro";
+import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
+const response = await getInscripcionesStats();
+const date = response.inscripciones;
+const { isAdmin } = Astro.locals;
+if (!isAdmin) {
+  alert("No tienes permiso para acceder a esta página.");
+  Astro.redirect("/login");
+  return;
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sorteo - Juntos en Casa</title>
+  </head>
+  <body>
+    <NavBar />
+    <main class="max-w-7xl mx-auto px-4 py-10 min-h-screen mt-20">
+      <h1 class="text-6xl font-bold text-center mb-10">Sorteo</h1>
+      <img
+        src="/personaje/fuegoapuntandoizq.png"
+        alt="Sorteo"
+        class="personaje"
+      />
+
+      <ComponentSorteoReact inscripciones={date} client:load />
+    </main>
+  </body>
+</html>
+
+<style>
+  .personaje {
+    width: 150px;
+    height: auto;
+    position: absolute;
+    top: 60px;
+    right: 400px;
+  }
+</style>

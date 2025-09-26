@@ -4,6 +4,7 @@ interface Props {
   stats: Stats;
 }
 const { stats } = Astro.props;
+console.log(stats.nombresIglesiasDif);
 ---
 
 <div class="flex flex-col gap-10">
@@ -50,5 +51,23 @@ const { stats } = Astro.props;
       <div class="stat-title">Mayores 25</div>
       <div class="stat-value">{stats.rangoMas25}</div>
     </div>
+  </div>
+  <div class="w-full h-40 overflow-scroll">
+    <h3 class="font-bold text-lg">
+      cantidad aproximada de congregaciones: {stats.cantidadIglesiasDif}
+    </h3>
+    <ul>
+      {
+        stats.nombresIglesiasDif && stats.nombresIglesiasDif.length > 0 && (
+          <>
+            <ul class="list-disc list-inside">
+              {stats.nombresIglesiasDif.map((iglesia) => (
+                <li>{iglesia}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+    </ul>
   </div>
 </div>
