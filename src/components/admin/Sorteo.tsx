@@ -232,7 +232,7 @@ export const Sorteo = ({ inscripciones }: {inscripciones: InscripcionReact[]}) =
         </div>
         {/* Lista de ganadores */}
         <div
-          className="w-3/4 h-full flex flex-col rounded-2xl text-white p-4 text-left min-h-0 bg-[url('/background/fondo1.webp')] bg-cover bg-center bg-no-repeat"
+          className="w-3/4 h-full flex flex-col rounded-2xl text-white p-4 text-left min-h-0"
         >
           <div className='shrink-0 space-y-1'>
             <span className='block text-3xl font-bold'>Participantes: {nombres.length}</span>
