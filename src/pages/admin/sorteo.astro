@@ -1,8 +1,6 @@
 ---
 import "../../styles/global.css";
-import { Sorteo as ComponentSorteoReact } from "../../components/admin/Sorteo";
-import Heading from "../../components/shared/Heading.astro";
-import Footer from "../../components/shared/Footer.astro";
+import { Sorteo as ComponentSorteoReact } from "../../components/admin/Sorteo.tsx";
 import NavBar from "../../components/auth/NavBar.astro";
 import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
 const response = await getInscripcionesStats();
