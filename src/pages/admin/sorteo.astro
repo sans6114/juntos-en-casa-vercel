@@ -6,7 +6,11 @@ import Footer from "../../components/shared/Footer.astro";
 import NavBar from "../../components/auth/NavBar.astro";
 import { getInscripcionesStats } from "../../scripts/get-inscripciones-stats";
 const response = await getInscripcionesStats();
-const date = response.inscripciones;
+// Reducir a datos serializables (sin Timestamps/refs)
+const date = response.inscripciones.map((i: any) => ({
+  nombre: String(i?.name ?? i?.nombre ?? ""),
+  apellido: String(i?.lastName ?? i?.apellido ?? ""),
+}));
 const { isAdmin } = Astro.locals;
 if (!isAdmin) {
   alert("No tienes permiso para acceder a esta página.");
@@ -37,7 +41,7 @@ if (!isAdmin) {
         class="personaje"
       />
 
-      <ComponentSorteoReact inscripciones={date} client:load />
+      <ComponentSorteoReact inscripciones={date} client:load server:defer />
     </main>
   </body>
 </html>

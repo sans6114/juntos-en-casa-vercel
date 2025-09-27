@@ -6,9 +6,13 @@ import React, {
 
 import Swal from 'sweetalert2';
 
-import type { Inscripcion } from '../../interfaces/Inscripcion';
+interface InscripcionReact {
+  nombre: string;
+  apellido: string;
+}
 
-export const Sorteo = ({ inscripciones }: { inscripciones: Inscripcion[] }) => {
+
+export const Sorteo = ({ inscripciones }: {inscripciones: InscripcionReact[]}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -19,12 +23,12 @@ export const Sorteo = ({ inscripciones }: { inscripciones: Inscripcion[] }) => {
   const MAX_GANADORES = 10;
 
   // Solo el nombre para mostrar
-  const nombres: string[] = inscripciones.map((i) => i.name);
+  const nombres: string[] = inscripciones.map((i) => i.nombre);
 
   // Helper: "Apellido, Nombre" (soporta nombre/apellido o name/lastName)
-  const nombreCompleto = (i: Inscripcion) => {
-    const nombre = (i as any).name ?? (i as any).nombre ?? '';
-    const apellido = (i as any).lastName ?? (i as any).apellido ?? '';
+  const nombreCompleto = (i: InscripcionReact) => {
+    const nombre = (i as any).nombre ?? (i as any).nombre ?? '';
+    const apellido = (i as any).apellido ?? (i as any).apellido ?? '';
     return apellido ? `${apellido}, ${nombre}` : nombre;
   };
 
