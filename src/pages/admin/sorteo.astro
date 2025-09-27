@@ -32,12 +32,10 @@ if (!isAdmin) {
   <body>
     <NavBar />
     <main class="max-w-7xl mx-auto px-4 py-10 min-h-screen mt-20">
-      <h1 class="text-6xl font-bold text-center mb-10">Sorteo</h1>
-      <img
-        src="/personaje/fuegoapuntandoizq.png"
-        alt="Sorteo"
-        class="personaje"
-      />
+      <div class="grid-title">
+        <h1 class="text-7xl font-bold text-center mb-10">Sorteo</h1>
+        <img src="/personaje/fuegoapuntandoizq.png" alt="Sorteo" />
+      </div>
 
       <ComponentSorteoReact inscripciones={date} client:load server:defer />
     </main>
@@ -45,11 +43,11 @@ if (!isAdmin) {
 </html>
 
 <style>
-  .personaje {
-    width: 150px;
-    height: auto;
-    position: absolute;
-    top: 60px;
-    right: 400px;
+  .grid-title {
+    display: grid;
+    width: 400px;
+    grid-template-columns: 3fr 4fr;
+    align-items: center;
+    margin: 0 auto;
   }
 </style>

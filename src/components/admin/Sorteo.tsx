@@ -187,7 +187,7 @@ export const Sorteo = ({ inscripciones }: {inscripciones: InscripcionReact[]}) =
       className='flex items-center justify-center w-full z-50'
     >
       <div
-        className='flex justify-center relative w-[460px] h-[460px] mr-8' // position: relative para que z-index funcione
+        className='flex justify-center relative w-[560px] h-[560px] mr-8' // position: relative para que z-index funcione
       >
         <canvas
           ref={canvasRef}
