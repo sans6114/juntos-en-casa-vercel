@@ -187,13 +187,13 @@ export const Sorteo = ({ inscripciones }: {inscripciones: InscripcionReact[]}) =
       className='flex items-center justify-center w-full z-50'
     >
       <div
-        className='flex justify-center relative'
+        className='flex justify-center relative w-[460px] h-[460px] mr-8' // position: relative para que z-index funcione
       >
         <canvas
           ref={canvasRef}
           style={{
-            width: '65%',
-            height: 'auto',
+            width: '100%',
+            height: '100%',
             display: 'block',
             background: 'white',
             borderRadius: 12,
@@ -222,17 +222,17 @@ export const Sorteo = ({ inscripciones }: {inscripciones: InscripcionReact[]}) =
           <button
             onClick={girar}
             disabled={spinning || nombres.length === 0 || ganadores.length >= MAX_GANADORES}
-            className='btn btn-primary w-46'
+            className='btn btn-primary w-60'
           >
             {spinning ? 'Girando…' : 'Sacar 2 ganadores'}
           </button>
-          <button onClick={reiniciar} disabled={spinning} className='btn btn-secondary w-46'>
+          <button onClick={reiniciar} disabled={spinning} className='btn btn-secondary w-60'>
             Reiniciar
           </button>
         </div>
         {/* Lista de ganadores */}
         <div
-          className="w-3/4 h-full flex flex-col rounded-2xl text-white p-4 text-left min-h-0"
+          className="w-2/4 h-full flex flex-col rounded-2xl text-white p-4 text-left min-h-0 bg-[url('/background/fondo1.webp')] bg-cover bg-center bg-no-repeat"
         >
           <div className='shrink-0 space-y-1'>
             <span className='block text-3xl font-bold'>Participantes: {nombres.length}</span>
